@@ -36,7 +36,9 @@ ostream& operator <<(ostream& sal,DtFecha& f){ //impime fecha el cout
     return sal;
 }
 
-bool operator <(const DtFecha& f1,const DtFecha& f2){  //operador de menor
+// pendiente de revisión -Rodrigo-
+bool operator <(const DtFecha& f1,const DtFecha& f2){
+	//Compara si f1 es anterior a f2
 	bool ret;
 	if (f1.anio < f2.anio){
 		ret=true;
