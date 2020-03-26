@@ -21,12 +21,13 @@ struct coleccionUsuarios{
 	int tope;
 };
 
-/*void registrarUsuario(){
+/*void registrarUsuario(){ VALENTIN
     string ci, nombre;
+    int tope = coleccionUsuarios.tope;
     bool yaExisteCi=false;
     cout << endl << "Cedula: ";
     cin >> ci;
-    for(int i=0;i<coleccionUsuarios.tope;i++){
+    for(int i=0;i<;i++){
         
     }
     if(yaExisteCi)
@@ -38,20 +39,23 @@ struct coleccionUsuarios{
     }
 }*/
  
+ 
+/*DtViaje ---> Rodrigo -en proceso-
+DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
+    Devuelve un arreglo con información detallada de los viajes realizados por el usuario antes de cierta fecha. Para poder implementar esta operación
+    se deberá sobrecargar el operador < del tipo de datos DtFecha.
+    cantViajes es un parámetro de salida donde se devuleve la cantidad de viajes encontrados (correspobnde a la cantidad de valores DtViajes que se devuelven)
+    Se espera una salida con el formato:
+
+    Viajes encontrados antes de @fecha: @cantViajes
+
+    Fecha: 25/1/19  10 minutos  3.5 Km
+
+
+}
+*/
+ 
 int main(){
 
-    /*DtViaje ---> Rodrigo -en proceso-
-    DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
-        Devuelve un arreglo con información detallada de los viajes realizados por el usuario antes de cierta fecha. Para poder implementar esta operación
-        se deberá sobrecargar el operador < del tipo de datos DtFecha.
-        cantViajes es un parámetro de salida donde se devuleve la cantidad de viajes encontrados (correspobnde a la cantidad de valores DtViajes que se devuelven)
-        Se espera una salida con el formato:
 
-        Viajes encontrados antes de @fecha: @cantViajes
-
-        Fecha: 25/1/19  10 minutos  3.5 Km
-
-
-    }
-    */
 }
