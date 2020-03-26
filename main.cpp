@@ -38,9 +38,4 @@ struct coleccionUsuarios{
 }*/
  
 int main(){
-    DtFecha* hoy = new DtFecha(25,3,2020);
-    Usuario* nuevo = new Usuario("49457795","Valentin",*hoy);
-    cout << *nuevo << endl;
-    delete nuevo;
-    cout << *hoy << endl;
 }
