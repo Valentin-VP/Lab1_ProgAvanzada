@@ -16,10 +16,24 @@
 using namespace std;
 #define MAX_USER 30
 
-struct coleccionUsuarios{
+struct{
 	Usuario* usuarios[MAX_USER];
 	int tope;
-};
+} coleccionUsuarios;
+
+Usuario* existeUsuario(string ci){
+    Usuario* user;
+	bool existe=false;
+	int i=0;
+	while((i<coleccionUsuarios.tope)&&(!existe)){
+		if(ci==coleccionUsuarios.usuarios[i]->getCedula()){
+			user=coleccionUsuarios.usuarios[i];
+			existe=true;
+		}
+		i++;
+	}
+	return user;
+}
 
 /*void registrarUsuario(){ VALENTIN
     string ci, nombre;
