@@ -21,7 +21,8 @@ struct{
 	int tope;
 } coleccionUsuarios;
 
-Usuario* existeUsuario(string ci){
+
+Usuario* existeUsuario(string ci){ //falta probar
     Usuario* user;
 	bool existe=false;
 	int i=0;
@@ -35,23 +36,30 @@ Usuario* existeUsuario(string ci){
 	return user;
 }
 
-/*void registrarUsuario(){ VALENTIN
-    string ci, nombre;
-    int tope = coleccionUsuarios.tope;
-    bool yaExisteCi=false;
-    cout << endl << "Cedula: ";
-    cin >> ci;
-    for(int i=0;i<;i++){
-        
-    }
-    if(yaExisteCi)
-        cout << "Cedula ya registrada" << endl;
-    else{    
-        cout << endl << "nombre: ";
-        cin >> nombre;
 
+void registrarUsuario(){ //funcionando
+    string ci, nombre;
+    cout << "Cedula: ";
+    cin >> ci;
+    bool existe=false;
+    int i=0;
+    while((!existe)&&(i<coleccionUsuarios.tope)){
+        if(ci==coleccionUsuarios.usuarios[i]->getCedula())
+            existe=true;
+        else
+            i++;
     }
-}*/
+    if(existe){
+        cout << "Usuario ya registrado" << endl;
+    }else{    
+        cout << "Nombre: ";
+        cin >> nombre;
+        DtFecha* fecha = new DtFecha(27,3,2020);
+        Usuario* u=new Usuario(ci,nombre,*fecha);
+        coleccionUsuarios.usuarios[coleccionUsuarios.tope] = u;
+        coleccionUsuarios.tope++;
+    }
+}
  
  
 /*DtViaje ---> Rodrigo -en proceso-
@@ -70,6 +78,5 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
 */
  
 int main(){
-
-
+    
 }

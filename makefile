@@ -26,4 +26,4 @@ Usuario.o: usuario.cpp
 main.o: main.cpp
 
 clean:
-	rm *.o labo
+	rm -rf *.o' labo
