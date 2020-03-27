@@ -67,9 +67,6 @@ void registrarUsuario(){ //funcionando
  
 // // DtViaje ---> Rodrigo -en proceso-
 // DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
-//     Usuario* user = obtenerUsuario(ci);
-//         if(cantViajes>user->getTopeViajes())
-//             cantViajes=user->getTopeViajes();
 //     // Devuelve un arreglo con información detallada de los viajes realizados por el usuario antes de cierta fecha. Para poder implementar esta operación
 //     // se deberá sobrecargar el operador < del tipo de datos DtFecha.
 //     // cantViajes es un parámetro de salida donde se devuleve la cantidad de viajes encontrados (correspobnde a la cantidad de valores DtViajes que se devuelven)
@@ -78,6 +75,23 @@ void registrarUsuario(){ //funcionando
 //     // Viajes encontrados antes de @fecha: @cantViajes
 
 //     // Fecha: 25/1/19  10 minutos  3.5 Km
+//     Usuario* user = obtenerUsuario(ci); //considerar que puede devolver un objeto nulo
+//         if(cantViajes>user->getTopeViajes())
+//             cantViajes=user->getTopeViajes();
+//         Viaje** viajes=user->obtenerViaje();
+//         DtViaje** dtViajes = new DtViaje*[];
+//         DtViaje * viaje;
+//         int i=0;
+//         while (i<user->getTopeViajes()){
+//             cout << "Viajes Realizados: " << endl;
+//             if(viajes[i]->getFecha()<fecha)
+//                 viaje= new DtViaje*(viajes[i].get);
+//         }
+//         for(int i=0; i<user->getTopeViajes;i++){
+//             if(viajes[i]->getFecha()<fecha)
+
+//         }
+
 
 
 // }

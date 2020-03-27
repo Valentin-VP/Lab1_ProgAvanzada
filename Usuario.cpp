@@ -7,6 +7,7 @@ Usuario::Usuario(string c,string n,DtFecha f){
 	this->cedula=c;
 	this->nombre=n;
 	this->fechaIngreso=f;
+	this->topeViajes=0;
 }
 Usuario::~Usuario(){}
 void Usuario::setCedula(string c){
@@ -28,11 +29,20 @@ DtFecha Usuario::getFechaIngreso(){
 	return this->fechaIngreso;
 }
 
-void Usuario::setTopeViajes(int tope){
-//pendiente
-}
 int Usuario::getTopeViajes(){
-//pendiente
+	return this->topeViajes;
+}
+
+void Usuario::agregarViaje(Viaje* v){
+	this->viajes[this->getTopeViajes]=v;
+	this->topeViajes++;
+}
+
+Viaje** Usuario::obtenerViaje(){
+	Viaje** todos_viajes = new Viaje*[this->topeViajes];
+	for(int i=0; i<this->topeViajes;i++)
+		todos_viajes[i]=this->viajes[i];
+	return todos_viajes;
 }
 
 ostream& operator <<(ostream& sal,Usuario& u){
