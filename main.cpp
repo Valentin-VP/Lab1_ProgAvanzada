@@ -12,6 +12,7 @@
 #include "Usuario.h"
 #include "Vehiculo.h"
 #include "Viaje.h"
+#include "DtViaje.h"
 
 using namespace std;
 #define MAX_USER 30
@@ -21,8 +22,10 @@ struct{
 	int tope;
 } coleccionUsuarios;
 
+Usuario* obtenerUsuario (string);
+DtViaje** verViajesAntesDeFecha(DtFecha&,string,int&);
 
-Usuario* existeUsuario(string ci){ //falta probar
+Usuario* obtenerUsuario(string ci){ //falta probar
     Usuario* user;
 	bool existe=false;
 	int i=0;
@@ -62,20 +65,23 @@ void registrarUsuario(){ //funcionando
 }
  
  
-/*DtViaje ---> Rodrigo -en proceso-
-DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
-    Devuelve un arreglo con información detallada de los viajes realizados por el usuario antes de cierta fecha. Para poder implementar esta operación
-    se deberá sobrecargar el operador < del tipo de datos DtFecha.
-    cantViajes es un parámetro de salida donde se devuleve la cantidad de viajes encontrados (correspobnde a la cantidad de valores DtViajes que se devuelven)
-    Se espera una salida con el formato:
+// // DtViaje ---> Rodrigo -en proceso-
+// DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
+//     Usuario* user = obtenerUsuario(ci);
+//         if(cantViajes>user->getTopeViajes())
+//             cantViajes=user->getTopeViajes();
+//     // Devuelve un arreglo con información detallada de los viajes realizados por el usuario antes de cierta fecha. Para poder implementar esta operación
+//     // se deberá sobrecargar el operador < del tipo de datos DtFecha.
+//     // cantViajes es un parámetro de salida donde se devuleve la cantidad de viajes encontrados (correspobnde a la cantidad de valores DtViajes que se devuelven)
+//     // Se espera una salida con el formato:
 
-    Viajes encontrados antes de @fecha: @cantViajes
+//     // Viajes encontrados antes de @fecha: @cantViajes
 
-    Fecha: 25/1/19  10 minutos  3.5 Km
+//     // Fecha: 25/1/19  10 minutos  3.5 Km
 
 
-}
-*/
+// }
+
  
 int main(){
     

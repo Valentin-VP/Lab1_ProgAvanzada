@@ -28,6 +28,13 @@ DtFecha Usuario::getFechaIngreso(){
 	return this->fechaIngreso;
 }
 
+void Usuario::setTopeViajes(int tope){
+//pendiente
+}
+int Usuario::getTopeViajes(){
+//pendiente
+}
+
 ostream& operator <<(ostream& sal,Usuario& u){
 	cout << "Cedula: " << u.cedula << endl << "Nombre: " << u.nombre << endl << "Fecha: " << u.fechaIngreso;
 }
