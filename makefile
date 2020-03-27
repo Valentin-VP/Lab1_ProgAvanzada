@@ -21,9 +21,9 @@ Viaje.o: Viaje.cpp
 
 DtFecha.o: DtFecha.cpp
 
-Usuario.o: usuario.cpp
+Usuario.o: Usuario.cpp
 
 main.o: main.cpp
 
 clean:
-	rm -rf *.o' labo
+	rm -rf *.o labo
