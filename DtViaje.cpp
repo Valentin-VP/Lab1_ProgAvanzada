@@ -2,7 +2,7 @@
 #include "DtVehiculo.h"
 
     DtViaje::DtViaje(){}
-    DtViaje::DtViaje(float precioTotal,DtVehiculo vehiculo){
+    DtViaje::DtViaje(int d,int n,DtFecha f, float precioTotal,DtVehiculo vehiculo):DtViajeBase(d,n,f){
         this->precioTotal=precioTotal;
         this->vehiculo=vehiculo;
     }

@@ -26,3 +26,10 @@ void DtViajeBase::setFecha(DtFecha f){
 DtFecha DtViajeBase::getFecha(){
 	return this->fecha;
 }
+ostream& operator <<(ostream& salida,const DtViajeBase& dtc){
+	cout << "Fecha viaje: " << 
+	dtc.fecha << "/" << 
+	dtc.distancia << "/" << 
+	dtc.duracion <<endl;
+	return salida;
+}
