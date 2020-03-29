@@ -9,6 +9,7 @@ class DtVehiculo{
 		float precioBase;
 	public:
 		DtVehiculo();
+		DtVehiculo(int,float,float);
 		~DtVehiculo();
 		int getNroSerie();
 		float getPorcentajeBateria();

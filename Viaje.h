@@ -1,6 +1,7 @@
 #ifndef VIAJE
 #define VIAJE
 #include "DtFecha.h"
+#include "Vehiculo.h"
 using namespace std;
 
 class Viaje{
@@ -10,11 +11,12 @@ class Viaje{
         int duracion;
         int distancia;
         DtFecha fecha;
+        Vehiculo* vehiculo;
 
     public:
 
         Viaje();
-        Viaje(int,int,DtFecha);
+        Viaje(int,int,DtFecha,Vehiculo*);
         ~Viaje();
 
         void setDuracion(int);
@@ -25,5 +27,7 @@ class Viaje{
 
         void setFecha(DtFecha);
 		DtFecha getFecha();
+
+        Vehiculo* getVehiculo();
 };
 #endif

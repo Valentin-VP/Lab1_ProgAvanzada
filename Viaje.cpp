@@ -1,10 +1,11 @@
 #include "Viaje.h"
 
 Viaje::Viaje(){}
-Viaje::Viaje(int d,int n,DtFecha f){
+Viaje::Viaje(int d,int n,DtFecha f, Vehiculo* v){
 	this->duracion=d;
 	this->distancia=n;
 	this->fecha=f;
+	this->vehiculo=v;
 }
 Viaje::~Viaje(){}
 
@@ -25,4 +26,8 @@ void Viaje::setFecha(DtFecha f){
 }
 DtFecha Viaje::getFecha(){
 	return this->fecha;
+}
+
+Vehiculo* Viaje::getVehiculo(){
+	return this->vehiculo;
 }
