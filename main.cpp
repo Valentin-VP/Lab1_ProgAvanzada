@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
-#include <ctime>
+#include <stdexcept> //funcion invaid_argument
+#include <stdlib.h> //funcion system
 #include "Bicicleta.h"
 #include "DtBicicleta.h"
 #include "DtFecha.h"
@@ -69,13 +70,20 @@ void existeUsuario(string ci){
 
 void registrarUsuario(){ //funcionando ***FALTA MANEJO DE EXCEPCION USANDO TRY CATCH***
     string ci, nombre;
+	int d, m, y;
     cout << "Cedula: ";
     cin >> ci;
     try{
         existeUsuario(ci);
         cout << "Nombre: ";
         cin >> nombre;
-        DtFecha* fecha = new DtFecha(27,3,2020); //tomar fecha del sistema o que?
+		cout << "Fecha de registro" << endl << "Dia: ";
+		cin >> d;
+		cout << "Mes: ";
+		cin >> m;
+		cout << "Anio: ";
+		cin >> y; 
+        DtFecha* fecha = new DtFecha(d,m,y);
         Usuario* u=new Usuario(ci,nombre,*fecha);
         coleccionUsuarios.usuarios[coleccionUsuarios.tope] = u;
         coleccionUsuarios.tope++;
