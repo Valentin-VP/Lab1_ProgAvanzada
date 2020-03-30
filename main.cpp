@@ -29,6 +29,8 @@ struct{
 } coleccionVehiculos;
 
 Usuario* obtenerUsuario (string);
+void ingresarViaje();
+void ingresarViaje(string ci,int nroSerie,DtViajeBase& viajeB);
 void verViajesAntesDeFecha();
 DtViaje** verViajesAntesDeFecha(DtFecha&,string,int&);
 void agregarVehiculo();
@@ -123,6 +125,63 @@ void existeVehiculo(int nroSerie){
 }
 
 
+// Operacion ingresarViaje
+
+void ingresarViaje(){
+	string ci;
+	int nroSerie;
+	DtViajeBase viajeB;
+	DtFecha fecha;
+	int dia, mes, anio, duracion, distancia;
+	cout << "Ingrese su cedula: ";
+	cin >> ci;
+	cout << "Ingrese numero de serie del vehiculo" << endl;
+	cin >> nroSerie;
+	try{
+		existeUsuario(ci);
+		existeVehiculo(nroSerie);
+		cout <<  "Ingrese dia: ";
+		cin >> dia;
+		cout << "Ingrese mes: ";
+		cin >> mes;
+		cout << "Ingrese anio: ";
+		cin >> anio;
+		fecha=DtFecha(dia,mes,anio);
+		cout << "Ingrese la duracion del viaje: ";
+		cin >> duracion;
+		cout << "Ingrese la distancia del viaje: ";
+		cin >> distancia;
+		if(duracion > 0 && distancia > 0){
+			darPrecioViaje();
+			viajeB=DtViajeBase(duracion,distancia,fecha);
+			ingresarViaje(ci,nroSerie,viajeB);
+		}else{
+			cout << "La distancia y duracion deben ser mayor a 0";
+		}
+
+	}catch(invalid_argument& e){
+		cout << e.what() << endl;
+	}
+}
+
+void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viajeB){
+	try{
+		Usuario* usuario = obtenerUsuario(ci);
+		Vehiculo* vehiculo = obtenerVehiculo(nroSerie);
+		//usuario->ingresarViaje()
+		DtViaje* dtv = new DtViaje(darPrecioViaje(viajeB.getDuracion(),viajeB.getDistancia()),vehiculo);
+		Viaje v = new Viaje(dtv.getDuracion(),dtv.getDistancia(),viajeB.getFecha());
+
+
+	}catch(){
+
+	}
+
+}
+
+
+//Fin Operacion ingresarViaje
+
 
 // DtViaje ---> Rodrigo -en proceso-
 // Bloque de codigo cuando se solicita imprimir Viajes -- OPERACION verViajesAntesDe
@@ -186,8 +245,47 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
 
  
 int main(){
+    /*
+    int opcion;
+
+	system("clear");
+	cout << "Bienvenido. Elija la opción." << endl;
+	cout << "1) Registrar usuario" << endl;
+	cout << "2) Agregar vehículo" << endl;
+	cout << "3) Ingresar viaje" << endl;
+	cout << "4) Ver viajes antes de.." << endl;
+	cout << "5) Eliminar viajes" << endl;
+	cout << "6) Cambiar bateria vehículo" << endl;
+	cout << "7) Obtener vehículos" << endl;
+	cout << "0) Salir" << endl;
+	cout << "Opción:";
+	cin >> opcion;
+		switch(opcion){
+			case 1: //registrarUsuario(ci,nombre);
+				break;
+			case 2: //agregarVehiculo(vehiculo);
+				break;
+			case 3: //ingresarViaje();
+				break;
+			case 4: //verViajesAntesDeFecha(fecha,ci,cantViajes);
+				break;
+			case 5: //eliminarViajes(ci,fecha);
+				break;
+			case 6: //cambiarBateriaVehiculo(nroSerieVehiculo,cargaVehiculo);
+				break;
+			case 7: //obtenerVehiculos(cantVehiculos);
+				break;
+			case 0: system("exit");
+				break;
+			default:
+				cout << "Opción incorrecta" << endl;
+		}
+        */
+
     //Llamada a operacion D desde el main.
     verViajesAntesDeFecha();
     //Llamada a operacion B desde el main.
     agregarVehiculo();
+
+    return 0;
 }

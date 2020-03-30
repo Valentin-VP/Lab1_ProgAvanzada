@@ -1,8 +1,9 @@
 #ifndef MONOPATIN
 #define MONOPATIN
+#include "Vehiculo.h"
 using namespace std;
 
-class Monopatin{
+class Monopatin: public Vehiculo{
 	private:
 		bool tieneLuces;
 	public:
@@ -10,6 +11,8 @@ class Monopatin{
 		~Monopatin();
 		void setTieneLuces(bool);
 		bool getTieneLuces();
+
+		float darPrecioViaje(int,int);
 };
 
 #endif

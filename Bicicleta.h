@@ -1,9 +1,10 @@
 #ifndef BICICLETA
 #define BICICLETA
+#include "Vehiculo.h"
 #include "TipoBici.h"
 using namespace std;
 
-class Bicicleta{
+class Bicicleta: public Vehiculo{
 	private:
 		TipoBici tipo;
 		int cantCambios;
@@ -15,7 +16,8 @@ class Bicicleta{
 		TipoBici getTipo();
 		void setCantCambios(int);
 		int getCantCambios();
-//falta darPrecioViaje
+
+		float darPrecioViaje(int,int);
 };
 
 #endif

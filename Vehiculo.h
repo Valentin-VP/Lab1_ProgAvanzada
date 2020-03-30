@@ -21,6 +21,6 @@ class Vehiculo{
 		void setPrecioBase(float);
 		float getPrecioBase();
 		
-		float darPrecioViaje(int,int);
+		virtual float darPrecioViaje(int,int)=0;
 };
 #endif
