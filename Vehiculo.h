@@ -1,6 +1,5 @@
 #ifndef VEHICULO
 #define VEHICULO
-#include "Viaje.h"
 using namespace std;
 
 class Vehiculo{

@@ -25,10 +25,6 @@ void Vehiculo::setPrecioBase(float precioBase){
 float Vehiculo::getPrecioBase(){
 	return this->precioBase;
 }
-float Vehiculo::darPrecioViaje(int,int){
-	
-}
-//falta darPrecio
 
 
 

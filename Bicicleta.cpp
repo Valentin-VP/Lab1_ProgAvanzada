@@ -21,6 +21,6 @@ int Bicicleta::getCantCambios(){
 }
 
 float Bicicleta::darPrecioViaje(int duracion, int distancia){
-	darPrecioViaje = this->getPrecioBase() * distancia;
-	return darPrecioViaje;
+	float precioViaje = this->getPrecioBase() * distancia;
+	return precioViaje;
 }
