@@ -11,7 +11,7 @@ class Usuario{
 		string cedula;
 		string nombre;
 		DtFecha fechaIngreso;
-		Viaje* viajes [MAX_VIAJES];
+		Viaje* viajes[MAX_VIAJES];
 		int topeViajes;
 	public:
 		Usuario();

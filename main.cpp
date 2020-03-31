@@ -29,6 +29,7 @@ struct{
 	int tope;
 } coleccionVehiculos;
 
+void existeUsuario(string ci);
 Usuario* obtenerUsuario (string);
 void ingresarViaje();
 void ingresarViaje(string ci,int nroSerie,DtViajeBase& viajeB);
@@ -42,19 +43,23 @@ void precioBaseValido(float);
 void valorPositivo(int);
 void fechaValida(DtFecha,string);
 
-Usuario* obtenerUsuario(string ci){ //deberia llamar a existeUsuario??
-//puede retornar un usuario nulo
-    Usuario* user;
-	bool existe=false;
-	int i=0;
-	while((i<coleccionUsuarios.tope)&&(!existe)){
-		if(ci==coleccionUsuarios.usuarios[i]->getCedula()){
-			user=coleccionUsuarios.usuarios[i];
-			existe=true;
+Usuario* obtenerUsuario(string ci){  //esta bien?
+	try{
+		existeUsuario(ci);
+		Usuario* user;
+		bool existe=false;
+		int i=0;
+		while((i<coleccionUsuarios.tope)&&(!existe)){
+			if(ci==coleccionUsuarios.usuarios[i]->getCedula()){
+				user=coleccionUsuarios.usuarios[i];
+				existe=true;
+			}
+			i++;
 		}
-		i++;
+		return user;
+	}catch (invalid_argument& e){
+		cout << e.what() << endl;
 	}
-	return user;
 }
 
 void existeUsuario(string ci){
@@ -145,7 +150,7 @@ void ingresarViaje(){
 	int dia, mes, anio, duracion, distancia;
 	cout << "Ingrese su cedula: ";
 	cin >> ci;
-	cout << "Ingrese numero de serie del vehiculo" << endl;
+	cout << "Ingrese numero de serie del vehiculo ";
 	cin >> nroSerie;
 	try{
 		existeUsuario(ci);
@@ -164,8 +169,7 @@ void ingresarViaje(){
 		valorPositivo(duracion);
 		valorPositivo(distancia);
 		fechaValida(fecha, ci);
-		// darPrecioViaje();
-		// viajeB=DtViajeBase(duracion,distancia,fecha);
+		viajeB=DtViajeBase(duracion,distancia,fecha);
 		// ingresarViaje(ci,nroSerie,viajeB); //Llamada a ingresarViaje con los parametros listos
 
 	}catch(invalid_argument& e){
@@ -179,7 +183,7 @@ void valorPositivo(int d){
 
 void fechaValida(DtFecha f, string ci){
 	Usuario* user = obtenerUsuario(ci);
-	if(f<user->getFechaIngreso())
+	if(f < user->getFechaIngreso())
 		throw invalid_argument("La fecha del viaje debe ser posterior o igual a la fecha de ingreso del usuario\n");
 }
 
@@ -204,6 +208,7 @@ void fechaValida(DtFecha f, string ci){
 
 // DtViaje ---> Rodrigo -en proceso-
 // Bloque de codigo cuando se solicita imprimir Viajes -- OPERACION verViajesAntesDe
+
 void verViajesAntesDeFecha(){
     system("clear");
 	cout <<"_________________________________________________" <<endl;
@@ -261,7 +266,37 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
 
 
 }
+void existeViaje(string ci,DtFecha& fecha){ //ver si esta bien el user->obtenerViaje[i] == fecha
+	Usuario* user = obtenerUsuario(ci);
+	bool encontro;
+	int i=0;
+	while((!encontro)&&(i < user->getTopeViajes())){
+		if(user->obtenerViaje[i] == fecha)
+			encontro=true;
+		else
+			i++;
+	}
+	if(!encontro)
+		throw invalid_argument("El usuario no tiene viajes en la fecha indicada\n");
+}
 
+/*void eliminarViajes(string ci, DtFecha& fecha){   Valentin, sin terminar
+	try{
+		existeUsuario(ci);
+		existeViaje(ci,fecha);
+		int i=0;
+		while(i<coleccionUsuarios.tope){
+        	if(ci!=coleccionUsuarios.usuarios[i]->getCedula())
+				i++;
+			else 
+				//coleccionUsuarios.usuarios[i]->
+				//eliminar la fecha de el arreglo fechas y correr todas las fechas bajando el numero del tope
+		}
+	}catch (invalid_argument& e){
+		cout << e.what() << endl;
+	}
+}
+*/
  
 int main(){
     /*
