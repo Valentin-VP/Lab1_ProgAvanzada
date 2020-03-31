@@ -39,9 +39,11 @@ void agregarVehiculo(DtVehiculo&);
 void existeVehiculo(int);
 void porcentajeValido(float);
 void precioBaseValido(float);
+void valorPositivo(int);
+void fechaValida(DtFecha,string);
 
-
-Usuario* obtenerUsuario(string ci){ //falta probar
+Usuario* obtenerUsuario(string ci){ //deberia llamar a existeUsuario??
+//puede retornar un usuario nulo
     Usuario* user;
 	bool existe=false;
 	int i=0;
@@ -159,33 +161,42 @@ void ingresarViaje(){
 		cin >> duracion;
 		cout << "Ingrese la distancia del viaje: ";
 		cin >> distancia;
-		if(duracion > 0 && distancia > 0){
-			darPrecioViaje();
-			viajeB=DtViajeBase(duracion,distancia,fecha);
-			ingresarViaje(ci,nroSerie,viajeB);
-		}else{
-			cout << "La distancia y duracion deben ser mayor a 0";
-		}
+		valorPositivo(duracion);
+		valorPositivo(distancia);
+		fechaValida(fecha, ci);
+		// darPrecioViaje();
+		// viajeB=DtViajeBase(duracion,distancia,fecha);
+		// ingresarViaje(ci,nroSerie,viajeB); //Llamada a ingresarViaje con los parametros listos
 
 	}catch(invalid_argument& e){
 		cout << e.what() << endl;
 	}
 }
-
-void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viajeB){
-	try{
-		Usuario* usuario = obtenerUsuario(ci);
-		Vehiculo* vehiculo = obtenerVehiculo(nroSerie);
-		//usuario->ingresarViaje()
-		DtViaje* dtv = new DtViaje(darPrecioViaje(viajeB.getDuracion(),viajeB.getDistancia()),vehiculo);
-		Viaje v = new Viaje(dtv.getDuracion(),dtv.getDistancia(),viajeB.getFecha());
-
-
-	}catch(){
-
-	}
-
+void valorPositivo(int d){
+	if(d<=0)
+		throw invalid_argument("El valor debe ser positivo\n");
 }
+
+void fechaValida(DtFecha f, string ci){
+	Usuario* user = obtenerUsuario(ci);
+	if(f<user->getFechaIngreso())
+		throw invalid_argument("La fecha del viaje debe ser posterior o igual a la fecha de ingreso del usuario\n");
+}
+
+// void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viajeB){
+// 	try{
+// 		Usuario* usuario = obtenerUsuario(ci);
+// 		Vehiculo* vehiculo = obtenerVehiculo(nroSerie);
+// 		//usuario->ingresarViaje()
+// 		DtViaje* dtv = new DtViaje(darPrecioViaje(viajeB.getDuracion(),viajeB.getDistancia()),vehiculo);
+// 		Viaje v = new Viaje(dtv.getDuracion(),dtv.getDistancia(),viajeB.getFecha());
+
+
+// 	}catch(){
+
+// 	}
+
+// }
 
 
 //Fin Operacion ingresarViaje
