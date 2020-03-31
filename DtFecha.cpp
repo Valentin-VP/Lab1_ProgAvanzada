@@ -31,7 +31,7 @@ int DtFecha::getAnio(){
     return this->anio;
 }
 
-ostream& operator <<(ostream& sal,DtFecha& f){ //impime fecha el cout
+ostream& operator <<(ostream& sal,DtFecha& f){ //imprime fecha el cout
     cout << f.dia << "/" << f.mes << "/" << f.anio;
     return sal;
 }
