@@ -269,7 +269,7 @@ int main(){
 	cout << "Opción:";
 	cin >> opcion;
 		switch(opcion){
-			case 1: //registrarUsuario(ci,nombre);
+			case 1: //registrarUsuario();
 				break;
 			case 2: //agregarVehiculo(vehiculo);
 				break;
@@ -288,12 +288,19 @@ int main(){
 			default:
 				cout << "Opción incorrecta" << endl;
 		}
-        */
+        
 
     //Llamada a operacion D desde el main.
     verViajesAntesDeFecha();
     //Llamada a operacion B desde el main.
     agregarVehiculo();
-
+*/
+int a=0,i=0;
+	while(a==0){
+		registrarUsuario();
+		cout << endl;
+		cin >> a;
+		cout << *coleccionUsuarios.usuarios[i] << endl;
+	}
     return 0;
 }
