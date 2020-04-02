@@ -36,7 +36,7 @@ void ingresarViaje(string ci,int nroSerie,DtViajeBase& viajeB);
 void verViajesAntesDeFecha();
 DtViaje** verViajesAntesDeFecha(DtFecha&,string,int&);
 void agregarVehiculo();
-void agregarVehiculo(DtVehiculo&);
+void agregarVehiculo(DtVehiculo& Vehiculo);
 void existeVehiculo(int);
 void porcentajeValido(float);
 void precioBaseValido(float);
@@ -102,18 +102,32 @@ void registrarUsuario(){ //funcionando ***FALTA MANEJO DE EXCEPCION USANDO TRY C
 void agregarVehiculo(){
     system("clear");
     //Interfaz con el usuario
-    	int nroSerie;
-		float porcentajeBateria;
-		float precioBase;
-        DtVehiculo vehiculo; //REVISAR
-        //Controles requeridos: 1-No existe un vehiculo con el mismo numero de serie
+	cout <<"______________________________________________" <<endl;
+	cout <<"____R E G I S T R O__D E__V E H I C U L O_____"<< endl;
+    int nroSerie;
+	float porcentajeBateria;
+	float precioBase;
+           
+	
     try{
-        existeVehiculo(nroSerie);
-        // 2 - Porcentaje en valor entre 0 y 100
-        porcentajeValido(porcentajeBateria);
-        // 3 - Precio base positivo
-        precioBaseValido(precioBase);
+		
+		cout << "Nro de Serie: " << endl;
+		cin >> nroSerie;		
+		existeVehiculo(nroSerie);// 1 -Vehiculo ya registrado
+        
+
+		cout <<"\nPorcentaje Batería: " << endl;
+		cin >> porcentajeBateria;
+        porcentajeValido(porcentajeBateria);// 2 - Porcentaje en valor entre 0 y 100
+
+
+        cout <<"\nPrecio Base: " << endl;
+		cin >> precioBase;
+        precioBaseValido(precioBase);// 3 - Precio base positivo
         // Se agrega vehiculo a coleccionVehiculos
+		
+		
+		
         
     }catch (invalid_argument& e){
         //YA EXISTE EL VEHICULO, PORCENTAJE INVALIDO O 
