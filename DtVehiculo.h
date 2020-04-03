@@ -1,5 +1,6 @@
 #ifndef DTVEHICULO
 #define DTVEHICULO
+#include <iostream>
 using namespace std;
 
 class DtVehiculo{
@@ -10,10 +11,10 @@ class DtVehiculo{
 	public:
 		DtVehiculo();
 		DtVehiculo(int,float,float);
-		~DtVehiculo();
+		virtual ~DtVehiculo();
 		int getNroSerie();
 		float getPorcentajeBateria();
 		float getPrecioBase();
-
+		friend ostream& operator <<(ostream& sal,DtVehiculo& v); //imprime datos de v
 };
 #endif

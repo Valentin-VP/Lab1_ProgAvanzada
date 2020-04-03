@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h>//TESTESTESTESTES
 #include <iostream>
 #include <stdexcept> //funcion invaid_argument
 #include <stdlib.h> //funcion system
@@ -43,7 +43,7 @@ void precioBaseValido(float);
 void valorPositivo(int);
 void fechaValida(DtFecha,string);
 
-Usuario* obtenerUsuario(string ci){  //esta bien?
+Usuario* obtenerUsuario(string ci){  //esta bien? //aqui existeUsuario(ci) tiraria una excepcion SI existe ese usuario (se va al Catch)
 	try{
 		existeUsuario(ci);
 		Usuario* user;
@@ -323,6 +323,51 @@ void eliminarViajes(string ci, DtFecha& fecha){   //ejercicio e sin comprobar si
 	}catch (invalid_argument& e){
 		cout << e.what() << endl;
 	}
+}
+
+// OP G
+/* NO TENGO CLARO SI ESTA BIEN */
+void obtenerVehiculo(){ 
+	system("clear");
+	cout <<"_________________________________________________" <<endl;
+	cout <<"___V E R__L I S T A D O__ D E__V E H I C U L O S___"<< endl;
+	int cantVehiculos = coleccionVehiculos.tope;
+	DtBicicleta* bici;
+	DtMonopatin* patin;
+
+		DtVehiculo** dtVehiculos = obtenerVehiculo(cantVehiculos);
+		cout << "VEHICULOS DEL SISTEMA: " <<endl;
+		for (int i = 0; i < cantVehiculos; i++){
+			bici = dynamic_cast<DtBicicleta*>(dtVehiculos[i]);			
+			if (bici!=NULL)
+				cout << "\n\n" << *(bici);
+			else{
+				patin = dynamic_cast<DtMonopatin*>(dtVehiculos[i]);		
+				if (patin!=NULL)
+					cout << "\n\n" << *(patin);	
+			}
+			cout << "-------------------------"<< endl;	
+		}
+}
+DtVehiculo** obtenerVehiculo(int &cantVehiculos){
+	Vehiculo** vehiculos = coleccionVehiculos.vehiculos;
+	DtBicicleta* dtBici;
+	DtMonopatin* dtPatin;
+	if(cantVehiculos>coleccionVehiculos.tope)
+		cantVehiculos=coleccionVehiculos.tope;
+	DtVehiculo** dtVehiculos = new DtVehiculo*[cantVehiculos];
+	for(int i=0;i<cantVehiculos;i++){
+		if(Bicicleta* bici = dynamic_cast<Bicicleta*>(vehiculos[i])){
+				dtBici = new DtBicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipo(),bici->getCantCambios());
+				dtVehiculos[i]=dtBici;
+		}else{
+			if(Monopatin* patin = dynamic_cast<Monopatin*>(vehiculos[i])){
+					dtPatin = new DtMonopatin(patin->getNroSerie(),patin->getPorcentajeBateria(),patin->getPrecioBase(),patin->getTieneLuces());
+					dtVehiculos[i]=dtPatin;
+			}
+		}
+	}
+	return dtVehiculos;
 }
 
  

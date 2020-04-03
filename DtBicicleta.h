@@ -2,6 +2,7 @@
 #define DTBICICLETA
 #include "DtVehiculo.h"
 #include "TipoBici.h"
+#include <iostream>
 using namespace std;
 
 class DtBicicleta: public DtVehiculo{
@@ -10,7 +11,7 @@ class DtBicicleta: public DtVehiculo{
         int cantCambios;
     public:
         DtBicicleta();
-        DtBicicleta(TipoBici,int);
+        DtBicicleta(int, float, float, TipoBici,int);
         
         TipoBici getTipoBici();
         void setTipoBici(TipoBici);
@@ -19,5 +20,6 @@ class DtBicicleta: public DtVehiculo{
 
         ~DtBicicleta();
         float darPrecioViaje(int,int);
+        friend ostream& operator <<(ostream& sal, const DtBicicleta& b); //imprime datos de b
 };
 #endif
