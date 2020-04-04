@@ -22,8 +22,8 @@ class DtFecha{
         void setAnio(int);
         int getAnio(); 
 
-        friend ostream& operator <<(ostream& sal,DtFecha& f); //para imprimir fecha con cout
+        friend ostream& operator <<(ostream&,const DtFecha&); //para imprimir fecha con cout
 
-        friend bool operator <(const DtFecha& f1,const DtFecha& f2); // para comparar fechas con <
+        friend bool operator <(const DtFecha&,const DtFecha&); // para comparar fechas con <
 };
 #endif 

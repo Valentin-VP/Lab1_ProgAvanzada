@@ -17,6 +17,6 @@ class DtViaje: public DtViajeBase{
         void setVehiculo(DtVehiculo*);
         DtVehiculo* getVehiculo();
 
-        //Falta implementar sobrecarga de impresion con el operador <<
+        friend ostream& operator <<(ostream&,const DtViaje&);
 };
 #endif

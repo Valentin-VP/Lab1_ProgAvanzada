@@ -24,6 +24,6 @@ class DtViajeBase{
         void setFecha(DtFecha);
 		DtFecha getFecha();
         
-        friend ostream& operator <<(ostream&,DtViajeBase&);
+        friend ostream& operator <<(ostream&,const DtViajeBase&);
 };
 #endif 

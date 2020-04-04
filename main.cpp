@@ -228,7 +228,7 @@ void verViajesAntesDeFecha(){
     dtFecha = DtFecha(dia,mes,anio);
     DtViaje** viajes= verViajesAntesDeFecha(dtFecha, ci, cantViajes);
     for (int i=0; i<cantViajes; i++)
-        cout << "\n" << *(viajes[i]);
+        cout << "\n" << *(viajes[i]); //revisando si imprime bien
 }
 
 DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
@@ -242,30 +242,25 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
     // Fecha: 25/1/19  10 minutos  3.5 Km
 
     Usuario* user = obtenerUsuario(ci); //considerar que puede devolver un objeto nulo
-        if(cantViajes>user->getTopeViajes())
-            cantViajes=user->getTopeViajes();
-        Viaje** viajes=user->obtenerViaje(); //copia todos los viajes del usuario en el arreglo de punteros Viaje viajes
-        DtViaje** dtViajes = new DtViaje*[MAX_VIAJES];
-        DtViaje* dtViaje;
-        DtVehiculo* dtVehiculo;
-        int i=0;
-        cout << "Viajes Realizados: " << endl;
-        while (i<user->getTopeViajes()){
-            if(viajes[i]->getFecha()<fecha){
-                dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
-                dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); //falta solucionar
-                cantViajes++;
-            }
-        }
-        for(int i=0; i<user->getTopeViajes;i++){
-            if(viajes[i]->getFecha()<fecha){
-
-            }
-        }
-
-
-
-}
+	if(cantViajes>user->getTopeViajes())
+		cantViajes=user->getTopeViajes();
+	Viaje** viajes=user->obtenerViaje(); //copia todos los viajes del usuario en el arreglo de punteros Viaje viajes
+	DtViaje** dtViajes = new DtViaje*[MAX_VIAJES];
+	DtViaje* dtViaje;
+	DtVehiculo* dtVehiculo;
+	int i=0;
+	cout << "Viajes Realizados: " << endl;
+	while (i<user->getTopeViajes()){ //Obtiene y guarda todos los viajes que  su fecha es anterior a la indicada
+		if(viajes[i]->getFecha()<fecha){
+			dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
+			dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); //falta solucionar
+			dtViajes[cantViajes]=dtViaje;
+			cantViajes++;
+		}
+		i++;
+	}
+	return dtViajes;
+}	
 
 bool igualFecha(DtFecha f1,DtFecha f2){ //ve si una fecha es igual a la otra
 	if(f1.getDia()==f2.getDia()){

@@ -20,3 +20,11 @@
     DtVehiculo* DtViaje::getVehiculo(){
         return this->vehiculo;
     }
+
+    ostream& operator <<(ostream& salida,const DtViaje& dtf){ //comprobar si imprime bien la parte que corresponde al padre DtViajeBase
+        cout << (DtViajeBase) dtf <<
+        "Precio viaje: " << 
+        dtf.precioTotal << "/" <<
+        dtf.vehiculo <<endl;
+        return salida;
+    }
