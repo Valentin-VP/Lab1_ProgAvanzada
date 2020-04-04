@@ -10,23 +10,14 @@ DtFecha::DtFecha(int dia,int mes,int anio){
 }
 DtFecha::~DtFecha(){}
 
-void DtFecha::setDia(int dia){
-    this->dia=dia;
-}
 int DtFecha::getDia(){
     return this->dia;
 }
 
-void DtFecha::setMes(int mes){
-    this->mes=mes;
-}
 int DtFecha::getMes(){
     return this->mes;
 }
 
-void DtFecha::setAnio(int anio){
-    this->anio=anio;
-}
 int DtFecha::getAnio(){
     return this->anio;
 }

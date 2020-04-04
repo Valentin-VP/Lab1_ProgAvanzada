@@ -15,7 +15,7 @@ class DtMonopatin : public DtVehiculo{
         
         ~DtMonopatin();
         
-        friend ostream& operator <<(ostream& sal, const DtMonopatin& m); //imprime datos de m
+        friend ostream& operator <<(ostream& sal, const DtMonopatin& m);
 };
 
 #endif

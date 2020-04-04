@@ -14,12 +14,8 @@ class DtBicicleta: public DtVehiculo{
         DtBicicleta(int, float, float, TipoBici,int);
         
         TipoBici getTipoBici();
-        void setTipoBici(TipoBici);	//No seria necesario
         int getCantCambios();
-        void setCantCambios(int);	//No seria necesario
-
         ~DtBicicleta();
-        float darPrecioViaje(int,int);		//No seria necesario
         
         friend ostream& operator <<(ostream& sal, const DtBicicleta& b); //imprime datos de b
 };

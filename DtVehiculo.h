@@ -16,7 +16,7 @@ class DtVehiculo{
 		float getPorcentajeBateria();
 		float getPrecioBase();
 		
-		friend ostream& operator <<(ostream& sal,DtVehiculo& v); //imprime datos de v
+		friend ostream& operator <<(ostream& sal,const DtVehiculo& v); //imprime datos de v
 
 
 };

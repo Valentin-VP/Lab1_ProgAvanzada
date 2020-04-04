@@ -29,7 +29,7 @@ class Usuario{
 		void agregarViaje(Viaje*);
 		Viaje** obtenerViaje();
 
-		friend ostream& operator <<(ostream&,Usuario&);
+		friend ostream& operator <<(ostream&,const Usuario&);
 
 
 };

@@ -14,14 +14,8 @@ class DtViajeBase{
         DtViajeBase();
         DtViajeBase(int,int,DtFecha);
         ~DtViajeBase();
-
-        void setDuracion(int);
         int getDuracion();
-
-        void setDistancia(int);
         int getDistancia();
-
-        void setFecha(DtFecha);
 		DtFecha getFecha();
         
         friend ostream& operator <<(ostream&,const DtViajeBase&);

@@ -12,14 +12,8 @@ class DtFecha{
         DtFecha();
         DtFecha(int,int,int);
         ~DtFecha();
-
-        void setDia(int);
         int getDia();
-
-        void setMes(int);
         int getMes();
-
-        void setAnio(int);
         int getAnio(); 
 
         friend ostream& operator <<(ostream&,const DtFecha&); //para imprimir fecha con cout

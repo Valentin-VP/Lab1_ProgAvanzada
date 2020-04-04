@@ -11,10 +11,7 @@ class DtViaje: public DtViajeBase{
         DtViaje();
         DtViaje(int, int, DtFecha, float ,DtVehiculo*);
         ~DtViaje();
-
-        void setPrecioTotal(float);
         float getPrecioTotal();
-        void setVehiculo(DtVehiculo*);
         DtVehiculo* getVehiculo();
 
         friend ostream& operator <<(ostream&,const DtViaje&);

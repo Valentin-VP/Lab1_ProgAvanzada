@@ -50,6 +50,6 @@ Viaje** Usuario::obtenerViaje(){
 }
 
 
-ostream& operator <<(ostream& sal,Usuario& u){
+ostream& operator <<(ostream& sal,const Usuario& u){
 	cout << "Cedula: " << u.cedula << endl << "Nombre: " << u.nombre << endl << "Fecha: " << u.fechaIngreso;
 }

@@ -8,6 +8,7 @@ class Monopatin: public Vehiculo{
 		bool tieneLuces;
 	public:
 		Monopatin();
+		Monopatin(int,float,float,bool);
 		~Monopatin();
 		void setTieneLuces(bool);
 		bool getTieneLuces();

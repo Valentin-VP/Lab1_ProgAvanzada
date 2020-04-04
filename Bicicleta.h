@@ -10,7 +10,7 @@ class Bicicleta: public Vehiculo{
 		int cantCambios;
 	public:
 		Bicicleta();
-		Bicicleta(TipoBici,int);
+		Bicicleta(int,float,float,TipoBici,int);
 		~Bicicleta();
 		void setTipo(TipoBici);
 		TipoBici getTipo();

@@ -1,12 +1,11 @@
 #include "Bicicleta.h"
 
 Bicicleta::Bicicleta(){}
-Bicicleta::Bicicleta(TipoBici tipo,int cantCambios){
+Bicicleta::Bicicleta(int nroSerie,float porBateria,float precioBase,TipoBici tipo,int cantCambios):Vehiculo(nroSerie,porBateria,precioBase){
 	this->tipo=tipo;
 	this->cantCambios=cantCambios;
 }
 Bicicleta::~Bicicleta(){}
-
 void Bicicleta::setTipo(TipoBici tipo){
 	this->tipo=tipo;
 }
@@ -19,8 +18,8 @@ void Bicicleta::setCantCambios(int cc){
 int Bicicleta::getCantCambios(){
 	return this->cantCambios;
 }
-
 float Bicicleta::darPrecioViaje(int duracion, int distancia){
-	float precioViaje = this->getPrecioBase() * distancia;
-	return precioViaje;
+	float viaje;
+	viaje = this->getPrecioBase() * distancia;
+	return viaje;
 }
