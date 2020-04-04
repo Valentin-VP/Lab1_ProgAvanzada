@@ -107,6 +107,7 @@ void agregarVehiculo(){
     int nroSerie;
 	float porcentajeBateria;
 	float precioBase;
+	DtVehiculo dtvehiculo;	
            
 	
     try{
@@ -124,9 +125,10 @@ void agregarVehiculo(){
         cout <<"\nPrecio Base: " << endl;
 		cin >> precioBase;
         precioBaseValido(precioBase);// 3 - Precio base positivo
-        // Se agrega vehiculo a coleccionVehiculos
+       
 		
-		
+		dtvehiculo = DtVehiculo(nroSerie,porcentajeBateria,precioBase);
+		agregarVehiculo(dtvehiculo);
 		
         
     }catch (invalid_argument& e){
@@ -134,6 +136,8 @@ void agregarVehiculo(){
         cout << e.what() << endl;
     }
 }
+
+
 
 void precioBaseValido(float pb){
     if(pb<=0)
