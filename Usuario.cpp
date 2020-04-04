@@ -33,6 +33,10 @@ int Usuario::getTopeViajes(){
 	return this->topeViajes;
 }
 
+void Usuario::setTopeViajes(int a){
+	this->topeViajes=a;
+}
+
 void Usuario::agregarViaje(Viaje* v){
 	this->viajes[getTopeViajes()]=v;
 	this->topeViajes++;
@@ -44,6 +48,7 @@ Viaje** Usuario::obtenerViaje(){
 		todos_viajes[i]=this->viajes[i];
 	return todos_viajes;
 }
+
 
 ostream& operator <<(ostream& sal,Usuario& u){
 	cout << "Cedula: " << u.cedula << endl << "Nombre: " << u.nombre << endl << "Fecha: " << u.fechaIngreso;

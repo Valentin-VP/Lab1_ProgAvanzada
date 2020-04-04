@@ -305,16 +305,15 @@ void eliminarViajes(string ci, DtFecha& fecha){   //ejercicio e sin comprobar si
         	if(ci!=coleccionUsuarios.usuarios[i]->getCedula())
 				i++;
 			else{
-				encontroUser=true;
+				encontroUser=true;  //i es la posicion del usuario en el arreglo
 				while(existeViaje(ci,fecha)){	
 					while((!encontroFecha)||(i<coleccionUsuarios.usuarios[i]->getTopeViajes())){
 						if(!igualFecha(fecha,coleccionUsuarios.usuarios[i]->obtenerViaje[f]))//PUEDEN SER IGUALES LAS FECHAS? O SON OBJETOS CON IDENTIDAD PROPIA
 							f++;
 						else{
-							while(coleccionUsuarios.usuarios[i]->getTopeViajes > f+1){
-								coleccionUsuarios.usuarios[i]->obtenerViaje[f]=coleccionUsuarios.usuarios[i]->obtenerViaje[f+1];
-								f++;
-							}	
+							delete coleccionUsuarios.usuarios[i]->obtenerViaje[f];
+							coleccionUsuarios.usuarios[i]->obtenerViaje[f]=coleccionUsuarios.usuarios[coleccionUsuarios.usuarios[i]->getTopeViajes()-1];
+							coleccionUsuarios.usuarios[i]->setTopeViajes(coleccionUsuarios.usuarios[i]->getTopeViajes()-1);	
 						}
 					}
 				}

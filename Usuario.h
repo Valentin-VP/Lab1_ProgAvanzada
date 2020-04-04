@@ -24,6 +24,7 @@ class Usuario{
 		void setFechaIngreso(DtFecha);
 		DtFecha getFechaIngreso();
 		int getTopeViajes();
+		void setTopeViajes(int);
 
 		void agregarViaje(Viaje*);
 		Viaje** obtenerViaje();
