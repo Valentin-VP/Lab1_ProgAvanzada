@@ -107,7 +107,7 @@ void agregarVehiculo(){
     int nroSerie;
 	float porcentajeBateria;
 	float precioBase;
-	DtVehiculo dtvehiculo;	
+	DtVehiculo* dtvehiculo;	
            
 	
     try{
@@ -126,8 +126,9 @@ void agregarVehiculo(){
 		cin >> precioBase;
         precioBaseValido(precioBase);// 3 - Precio base positivo
        
-		
-		dtvehiculo = DtVehiculo(nroSerie,porcentajeBateria,precioBase);
+		dtvehiculo = new DtVehiculo(nroSerie,porcentajeBateria,precioBase);		
+			
+
 		agregarVehiculo(dtvehiculo);
 		
         
@@ -137,7 +138,22 @@ void agregarVehiculo(){
     }
 }
 
+void agregarVehiculo(DtVehiculo& Vehiculo){
 
+	if(Bicicleta* bici=dynamic_cast<Bicicleta*>(dtvehiculo)){
+
+		DtBicicleta* dtbici=new Bicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipo(),bici->getCantCambios());
+		dtvehiculo = dtbici;
+
+	}else if(Monopatin* mono=dynamic_cast<Monopatin*>(dtvehiculo)){
+		
+		DtMonopatin* dtmono=new Monopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(),mono->getTipo(),mono->getTieneLuces());
+		dtvehiculo = dtmono;
+
+	}
+
+
+}
 
 void precioBaseValido(float pb){
     if(pb<=0)
