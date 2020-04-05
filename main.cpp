@@ -321,7 +321,7 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
 		while (i<user->getTopeViajes()){ //Obtiene y guarda todos los viajes que  su fecha es anterior a la indicada
 			if(viajes[i]->getFecha()<fecha){
 				dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
-				dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); //falta solucionar
+				dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); 
 				dtViajes[cantViajes]=dtViaje;
 				cantViajes++;
 			}
@@ -353,19 +353,25 @@ bool igualFecha(DtFecha f1,DtFecha f2){ //ve si una fecha es igual a la otra
 
 
 bool existeViaje(string ci,DtFecha fecha){ //ve si el usuario ci tiene un viaje en esa fecha
-	Usuario* user = obtenerUsuario(ci);
-	bool encontro;
-	int i=0;
-	while((!encontro)&&(i < user->getTopeViajes())){
-		if(igualFecha(user->obtenerViaje[i]->getFecha(), fecha))
-			encontro=true;
-		else
-			i++;
+	try{
+		errorSiNoExisteUsuario(ci);
+		Usuario* user = obtenerUsuario(ci);
+		bool encontro;
+		int i=0;
+		while((!encontro)&&(i < user->getTopeViajes())){
+			if(igualFecha(user->obtenerViaje()[i]->getFecha(), fecha))
+				encontro=true;
+			else
+				i++;
+		}
+		if(encontro)
+			return true;
+		else 
+			return false;
+	}catch(std::invalid_argument& e){
+		cout << e.what() << endl;
 	}
-	if(encontro)
-		return true;
-	else 
-		return false;
+
 }
 
 void eliminarViajes(){   //ejercicio e sin comprobar si funciona
@@ -391,11 +397,11 @@ void eliminarViajes(){   //ejercicio e sin comprobar si funciona
 				encontroUser=true;  //i es la posicion del usuario en el arreglo
 				while(existeViaje(ci,fecha)){	
 					while((!encontroFecha)||(i<coleccionUsuarios.usuarios[i]->getTopeViajes())){
-						if(!igualFecha(fecha,coleccionUsuarios.usuarios[i]->obtenerViaje[f]))//PUEDEN SER IGUALES LAS FECHAS? O SON OBJETOS CON IDENTIDAD PROPIA
+						if(!igualFecha(fecha,coleccionUsuarios.usuarios[i]->obtenerViaje()[f]->getFecha()))//se corrige esto
 							f++;
 						else{
-							delete &(coleccionUsuarios.usuarios[i]->obtenerViaje[f]);
-							&(coleccionUsuarios.usuarios[i]->obtenerViaje[f])=coleccionUsuarios.usuarios[coleccionUsuarios.usuarios[i]->getTopeViajes()-1];
+							delete &(coleccionUsuarios.usuarios[i]->obtenerViaje()[f]);
+							//&(coleccionUsuarios.usuarios[i]->obtenerViaje()[f])=coleccionUsuarios.usuarios[coleccionUsuarios.usuarios[i]->getTopeViajes()-1]; <-- ¿?¿?¿?¿?
 							coleccionUsuarios.usuarios[i]->setTopeViajes(coleccionUsuarios.usuarios[i]->getTopeViajes()-1);	
 						}
 					}

@@ -38,7 +38,7 @@ void Usuario::setTopeViajes(int a){
 }
 
 void Usuario::agregarViaje(Viaje* v){
-	this->viajes[getTopeViajes()]=v;
+	this->viajes[this->topeViajes]=v;
 	this->topeViajes++;
 }
 
