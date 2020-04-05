@@ -47,6 +47,8 @@ void fechaValida(DtFecha,string);
 void obtenerVehiculos();
 DtVehiculo** obtenerVehiculos(int &cantVehiculos);
 DtVehiculo* obtenerVehiculo(int);
+void cambiarBateriaVehiculo();
+void cambiarBateriaVehiculo(int,float);
 
 
 Usuario* obtenerUsuario(string ci){  //esta bien? //aqui errorSiExisteUsuario(ci) tiraria una excepcion SI existe ese usuario (se va al Catch)
@@ -285,36 +287,32 @@ void verViajesAntesDeFecha(){
 }
 
 DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
-    // Devuelve un arreglo con información detallada de los viajes realizados por el usuario antes de cierta fecha. Para poder implementar esta operación
-    // se deberá sobrecargar el operador < del tipo de datos DtFecha.
-    // cantViajes es un parámetro de salida donde se devuleve la cantidad de viajes encontrados (correspobnde a la cantidad de valores DtViajes que se devuelven)
-    // Se espera una salida con el formato:
-
-    // Viajes encontrados antes de @fecha: @cantViajes
-
-    // Fecha: 25/1/19  10 minutos  3.5 Km
-
 	// try catch usando errorSiNoExisteUsuario
-	
-    Usuario* user = obtenerUsuario(ci); 
-	if(cantViajes>user->getTopeViajes())
-		cantViajes=user->getTopeViajes();
-	Viaje** viajes=user->obtenerViaje(); //copia todos los viajes del usuario en el arreglo de punteros Viaje viajes
-	DtViaje** dtViajes = new DtViaje*[MAX_VIAJES];
-	DtViaje* dtViaje;
-	DtVehiculo* dtVehiculo;
-	int i=0;
-	cout << "Viajes Realizados: " << endl;
-	while (i<user->getTopeViajes()){ //Obtiene y guarda todos los viajes que  su fecha es anterior a la indicada
-		if(viajes[i]->getFecha()<fecha){
-			dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
-			dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); //falta solucionar
-			dtViajes[cantViajes]=dtViaje;
-			cantViajes++;
+	try{
+		errorSiNoExisteUsuario(ci);
+		Usuario* user = obtenerUsuario(ci); 
+		if(cantViajes>user->getTopeViajes())
+			cantViajes=user->getTopeViajes();
+		Viaje** viajes=user->obtenerViaje(); //copia todos los viajes del usuario en el arreglo de punteros Viaje viajes
+		DtViaje** dtViajes = new DtViaje*[MAX_VIAJES];
+		DtViaje* dtViaje;
+		DtVehiculo* dtVehiculo;
+		int i=0;
+		cout << "Viajes Realizados: " << endl;
+		while (i<user->getTopeViajes()){ //Obtiene y guarda todos los viajes que  su fecha es anterior a la indicada
+			if(viajes[i]->getFecha()<fecha){
+				dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
+				dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); //falta solucionar
+				dtViajes[cantViajes]=dtViaje;
+				cantViajes++;
+			}
+			i++;
 		}
-		i++;
+		return dtViajes;
+	}catch(std::invalid_argument& e){
+		cout << e.what() << endl;
 	}
-	return dtViajes;
+
 }	
 
 bool igualFecha(DtFecha f1,DtFecha f2){ //ve si una fecha es igual a la otra
@@ -418,6 +416,35 @@ DtVehiculo** obtenerVehiculos(int &cantVehiculos){
 	}
 	return dtVehiculos;
 }
+
+void cambiarBateriaVehiculo(){
+	int nroSerieVehiculo, porcentajeBateria;
+	try{
+		cout << "Nro de Serie: " << endl;
+		cin >> nroSerieVehiculo;		
+		errorSiNoExisteVehiculo(nroSerieVehiculo);// 1 -Vehiculo ya registrado
+		cout <<"\nPorcentaje Batería: " << endl;
+		cin >> porcentajeBateria;
+        porcentajeValido(porcentajeBateria);// 2 - Porcentaje en valor entre 0 y 100
+		cambiarBateriaVehiculo(nroSerieVehiculo, porcentajeBateria);
+    }catch (invalid_argument& e){
+        //NO EXISTE EL VEHICULO|PORCENTAJE INVALIDO
+        cout << e.what() << endl;
+    }
+}
+
+void cambiarBateriaVehiculo(int nroSerieVehiculo, float cargaVehiculo){
+	int j=0;
+	bool found= false;
+	while((j<coleccionVehiculos.tope)&&(!found)){
+		if(nroSerieVehiculo==coleccionVehiculos.vehiculos[j]->getNroSerie()){
+			coleccionVehiculos.vehiculos[j]->setPorcentajeBateria(cargaVehiculo);
+			found=true;
+		}
+	}
+}
+
+
 int main(){
     /*
     int opcion;
@@ -455,11 +482,6 @@ int main(){
 				cout << "Opción incorrecta" << endl;
 		}
         
-
-    //Llamada a operacion D desde el main.
-    verViajesAntesDeFecha();
-    //Llamada a operacion B desde el main.
-    agregarVehiculo();
 */
 int a=0,i=0;
 	while(a==0){
