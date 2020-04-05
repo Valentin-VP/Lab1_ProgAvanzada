@@ -449,8 +449,10 @@ void eliminarViajes(){   //ejercicio e sin comprobar si funciona
 							f++;
 						else{
 							delete &(coleccionUsuarios.usuarios[i]->obtenerViaje()[f]);
-							//&(coleccionUsuarios.usuarios[i]->obtenerViaje()[f])=coleccionUsuarios.usuarios[coleccionUsuarios.usuarios[i]->getTopeViajes()-1]; <-- ¿?¿?¿?¿?
-							coleccionUsuarios.usuarios[i]->setTopeViajes(coleccionUsuarios.usuarios[i]->getTopeViajes()-1);	
+							if(f!=coleccionUsuarios.usuarios[i]->getTopeViajes()-1){
+								coleccionUsuarios.usuarios[i]->obtenerViaje()[f]=coleccionUsuarios.usuarios[i]->obtenerViaje()[coleccionUsuarios.usuarios[i]->getTopeViajes()-1];	
+							}
+							coleccionUsuarios.usuarios[i]->setTopeViajes(coleccionUsuarios.usuarios[i]->getTopeViajes()-1);
 						}
 					}
 				}
