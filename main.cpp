@@ -449,7 +449,8 @@ void eliminarViajes(){   //ejercicio e sin comprobar si funciona
 						if(!igualFecha(fecha,coleccionUsuarios.usuarios[i]->obtenerViaje()[f]->getFecha()))//se corrige esto
 							f++;
 						else{
-							delete &(coleccionUsuarios.usuarios[i]->obtenerViaje()[f]);
+							cout << "Paso previo al delete" << endl;
+							delete coleccionUsuarios.usuarios[i]->obtenerViaje()[f];
 							if(f!=coleccionUsuarios.usuarios[i]->getTopeViajes()-1){
 								coleccionUsuarios.usuarios[i]->obtenerViaje()[f]=coleccionUsuarios.usuarios[i]->obtenerViaje()[coleccionUsuarios.usuarios[i]->getTopeViajes()-1];	
 							}
