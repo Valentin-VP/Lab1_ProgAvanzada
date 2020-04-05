@@ -279,12 +279,12 @@ DtVehiculo* obtenerVehiculo(int nroSerie){
 	// PRE: Se controla antes que el vehiculo existe en la coleccion
 	for(int i=0;i<coleccionVehiculos.tope;i++){
 		if(nroSerie==coleccionVehiculos.vehiculos[i]->getNroSerie()){
-			if(DtBicicleta* dtbici = dynamic_cast<DtBicicleta*>(coleccionVehiculos.vehiculos[i])){
-				DtBicicleta* dtbi = new DtBicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
+			if(Bicicleta* bici = dynamic_cast<Bicicleta*>(coleccionVehiculos.vehiculos[i])){
+				DtBicicleta* dtbi = new DtBicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipo(),bici->getCantCambios());
 				return dtbi;
 			}else{
-				if(DtMonopatin* dtmono = dynamic_cast<DtMonopatin*>(coleccionVehiculos.vehiculos[i])){
-				DtMonopatin* dtmo = new DtMonopatin(dtmono->getNroSerie(),dtmono->getPorcentajeBateria(),dtmono->getPrecioBase(),dtmono->getTieneLuces());
+				if(Monopatin* mono = dynamic_cast<Monopatin*>(coleccionVehiculos.vehiculos[i])){
+				DtMonopatin* dtmo = new DtMonopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(),mono->getTieneLuces());
 				return dtmo;
 				}
 			}
@@ -300,7 +300,7 @@ void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viaje){
 		if(DtBicicleta* dtbici = dynamic_cast<DtBicicleta*>(ve)){
 			Bicicleta* dtb = new Bicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
 			precioViaje = dtb->darPrecioViaje(viaje.getDuracion(),viaje.getDistancia());
-			DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
+			//DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
 			Viaje* viajea = new Viaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),dtb);
 			usuario->agregarViaje(viajea);
 		}
@@ -308,7 +308,7 @@ void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viaje){
 			if(DtMonopatin* dtmono = dynamic_cast<DtMonopatin*>(ve)){
 			Monopatin* dtm = new Monopatin(dtmono->getNroSerie(),dtmono->getPorcentajeBateria(),dtmono->getPrecioBase(),dtmono->getTieneLuces());
 			precioViaje = dtm->darPrecioViaje(viaje.getDuracion(),viaje.getDistancia());
-			DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
+			//DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
 			Viaje* viajea = new Viaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),dtm);
 			usuario->agregarViaje(viajea);
 			}
@@ -418,7 +418,7 @@ bool existeViaje(string ci,DtFecha fecha){ //ve si el usuario ci tiene un viaje 
 	}
 
 }
-
+//FALTA void eliminarViajes(string ci, DtFecha& fecha)
 void eliminarViajes(){   //ejercicio e sin comprobar si funciona
 	system("clear");
 	cout <<"_____________________________________________" <<endl;
