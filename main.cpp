@@ -274,8 +274,15 @@ DtVehiculo* obtenerVehiculo(int nroSerie){
 	// PRE: Se controla antes que el vehiculo existe en la coleccion
 	for(int i=0;i<coleccionVehiculos.tope;i++){
 		if(nroSerie==coleccionVehiculos.vehiculos[i]->getNroSerie()){
-			DtVehiculo* dtve = new DtVehiculo(coleccionVehiculos.vehiculos[i]->getNroSerie(),coleccionVehiculos.vehiculos[i]->getPorcentajeBateria(),coleccionVehiculos.vehiculos[i]->getPrecioBase());
-			return dtve;
+			if(DtBicicleta* dtbici = dynamic_cast<DtBicicleta*>(coleccionVehiculos.vehiculos[i])){
+				DtBicicleta* dtbi = new DtBicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
+				return dtbi;
+			}else{
+				if(DtMonopatin* dtmono = dynamic_cast<DtMonopatin*>(coleccionVehiculos.vehiculos[i])){
+				DtMonopatin* dtmo = new DtMonopatin(dtmono->getNroSerie(),dtmono->getPorcentajeBateria(),dtmono->getPrecioBase(),dtmono->getTieneLuces());
+				return dtmo;
+				}
+			}
 		}
 	}
 }
@@ -285,7 +292,6 @@ void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viaje){
         // Obtener Vehiculo
         DtVehiculo* ve = obtenerVehiculo(nroSerieVehiculo) ;// = obtenerVehiculo(nroSerieVehiculo);
         float precioViaje;
-        
 		if(DtBicicleta* dtbici = dynamic_cast<DtBicicleta*>(ve)){
 			Bicicleta* dtb = new Bicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
 			precioViaje = dtb->darPrecioViaje(viaje.getDuracion(),viaje.getDistancia());
@@ -350,12 +356,11 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
 		Viaje** viajes=user->obtenerViaje(); //copia todos los viajes del usuario en el arreglo de punteros Viaje viajes
 		DtViaje** dtViajes = new DtViaje*[MAX_VIAJES];
 		DtViaje* dtViaje;
-		DtVehiculo* dtVehiculo;
 		int i=0;
 		cout << "Viajes Realizados: " << endl;
 		while (i<user->getTopeViajes()){ //Obtiene y guarda todos los viajes que  su fecha es anterior a la indicada
 			if(viajes[i]->getFecha()<fecha){
-				dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
+				DtVehiculo* dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
 				dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); 
 				dtViajes[cantViajes]=dtViaje;
 				cantViajes++;

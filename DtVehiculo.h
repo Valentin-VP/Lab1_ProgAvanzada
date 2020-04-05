@@ -4,7 +4,7 @@ using namespace std;
 #include <iostream>
 
 class DtVehiculo{
-	private:
+	protected:
 		int nroSerie;
 		float porcentajeBateria;
 		float precioBase;
