@@ -104,6 +104,9 @@ void errorSiExisteUsuario(string ci){
 }
 
 void registrarUsuario(){ //funcionando 
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"______R E G I S T R O__D E__ U S U A R I O_______"<< endl;
     string ci, nombre;
 	int d, m, y;
     cout << "Cedula: ";
@@ -116,7 +119,7 @@ void registrarUsuario(){ //funcionando
 		cin >> d;
 		cout << "Mes: ";
 		cin >> m;
-		cout << "Anio: ";
+		cout << "Año: ";
 		cin >> y; 
         DtFecha* fecha = new DtFecha(d,m,y);
         Usuario* u=new Usuario(ci,nombre,*fecha);
@@ -129,7 +132,6 @@ void registrarUsuario(){ //funcionando
  
 void agregarVehiculo(){
     system("clear");
-    //Interfaz con el usuario
 	cout <<"______________________________________________" <<endl;
 	cout <<"____R E G I S T R O__D E__V E H I C U L O_____"<< endl;
     int nroSerie;
@@ -234,6 +236,9 @@ void errorSiNoExisteVehiculo (int nroSerie){
 }
 
 void ingresarViaje(){
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"______I N G R E S O__D E__ V I A J E_______"<< endl;
     string ci;
     int nroSerieVehiculo;
     int dia, mes, anio, duracion, distancia;
@@ -317,7 +322,7 @@ void valorPositivo(int d){
 
 void fechaValida(DtFecha f, string ci){
 	Usuario* user = obtenerUsuario(ci);
-	if(f < user->getFechaIngreso())
+	if(user->getFechaIngreso() < f)
 		throw invalid_argument("La fecha del viaje debe ser posterior o igual a la fecha de ingreso del usuario\n");
 }
  
@@ -361,7 +366,7 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
 		while (i<user->getTopeViajes()){ //Obtiene y guarda todos los viajes que  su fecha es anterior a la indicada
 			if(viajes[i]->getFecha()<fecha){
 				DtVehiculo* dtVehiculo= new DtVehiculo (viajes[i]->getVehiculo()->getNroSerie(),viajes[i]->getVehiculo()->getPorcentajeBateria(),viajes[i]->getVehiculo()->getPrecioBase());
-				dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->getPrecioBase(),dtVehiculo); 
+				dtViaje= new DtViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia(),viajes[i]->getFecha(),(viajes[i]->getVehiculo())->darPrecioViaje(viajes[i]->getDuracion(),viajes[i]->getDistancia()),dtVehiculo);
 				dtViajes[cantViajes]=dtViaje;
 				cantViajes++;
 			}
@@ -415,6 +420,9 @@ bool existeViaje(string ci,DtFecha fecha){ //ve si el usuario ci tiene un viaje 
 }
 
 void eliminarViajes(){   //ejercicio e sin comprobar si funciona
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"______E L I M I N A R__V I A J E S_______"<< endl;
 	string ci;
 	cout << "Cedula del usuario: ";
 	cin >> ci;
@@ -427,7 +435,7 @@ void eliminarViajes(){   //ejercicio e sin comprobar si funciona
 	cin >> y;
 	DtFecha fecha = DtFecha(d,m,y);
 	try{
-		errorSiExisteUsuario(ci);
+		errorSiNoExisteUsuario(ci);
 		int i=0,f=0;
 		bool encontroUser=false,encontroFecha=false;
 		while((!encontroUser)||(i<coleccionUsuarios.tope)){
@@ -497,6 +505,9 @@ DtVehiculo** obtenerVehiculos(int &cantVehiculos){
 }
 
 void cambiarBateriaVehiculo(){
+	system("clear");
+	cout <<"_____________________________________________" <<endl;
+	cout <<"______C A M B I A R__B A T R I A_______"<< endl;
 	int nroSerieVehiculo, porcentajeBateria;
 	try{
 		cout << "Nro de Serie: " << endl;
@@ -520,6 +531,7 @@ void cambiarBateriaVehiculo(int nroSerieVehiculo, float cargaVehiculo){
 			coleccionVehiculos.vehiculos[j]->setPorcentajeBateria(cargaVehiculo);
 			found=true;
 		}
+		j++;
 	}
 }
 
