@@ -14,6 +14,7 @@
 #include "Vehiculo.h"
 #include "Viaje.h"
 #include "DtViaje.h"
+#include <unistd.h>
 
 using namespace std;
 #define MAX_USER 30
@@ -241,9 +242,9 @@ void ingresarViaje(){
     cout << "Ingrese numero de serie del vehiculo: ";
     cin >> nroSerieVehiculo;
     try{
-        errorSiExisteUsuario(ci);
+        errorSiNoExisteUsuario(ci);
         // Comprobar si existe el Usuario
-        errorSiExisteVehiculo(nroSerieVehiculo);
+        errorSiNoExisteVehiculo(nroSerieVehiculo);
         // Comprobar si existe el vehiculo
         
         cout << "Ingrese dia: ";
@@ -259,7 +260,6 @@ void ingresarViaje(){
 		// Comprobar si la distancia y duracion son validas:
         valorPositivo(duracion);
         valorPositivo(distancia);
-
         DtFecha fecha=DtFecha(dia,mes,anio);
         fechaValida(fecha,ci);
         // Comprobar si la fecha del viaje es posterior o igual a la fecha de ingreso del usuario
@@ -527,7 +527,8 @@ void cambiarBateriaVehiculo(int nroSerieVehiculo, float cargaVehiculo){
 int main(){
 
     int opcion;
-
+	while(opcion!=0){
+	sleep(2);
 	system("clear");
 	cout << "Bienvenido. Elija la opción." << endl;
 	cout << "1) Registrar usuario" << endl;
@@ -540,6 +541,7 @@ int main(){
 	cout << "0) Salir" << endl;
 	cout << "Opción: ";
 	cin >> opcion;
+	
 		switch(opcion){
 			case 1: registrarUsuario();
 				break;
@@ -560,5 +562,7 @@ int main(){
 			default:
 				cout << "Opción incorrecta" << endl;
 		}
+	}
+
     return 0;
 }
