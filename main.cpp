@@ -349,6 +349,7 @@ void verViajesAntesDeFecha(){
     DtViaje** viajes= verViajesAntesDeFecha(dtFecha, ci, cantViajes);
     for (int i=0; i<cantViajes; i++)
         cout << "\n" << *(viajes[i]); //revisando si imprime bien
+	sleep(2);
 }
 
 DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){

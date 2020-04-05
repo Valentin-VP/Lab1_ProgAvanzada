@@ -19,6 +19,6 @@
         cout << (DtViajeBase) dtf << endl;
         cout << "Precio viaje: $"; 
         cout << dtf.precioTotal << "/" << endl;
-        cout << dtf.vehiculo << endl ;
+        cout << *dtf.vehiculo << endl ;
         return salida;
     }
