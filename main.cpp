@@ -132,9 +132,14 @@ void agregarVehiculo(){
 	cout <<"______________________________________________" <<endl;
 	cout <<"____R E G I S T R O__D E__V E H I C U L O_____"<< endl;
     int nroSerie;
+	int op, opTipoBici, opTieneLuces;
+	TipoBici tBici;
 	float porcentajeBateria;
 	float precioBase;
-	DtVehiculo* dtvehiculo;	
+	int cambios;
+	bool bLuces;
+	DtBicicleta* dtBici;	
+	DtMonopatin* dtPatin;	
     try{
 		cout << "Nro de Serie: " << endl;
 		cin >> nroSerie;		
@@ -145,25 +150,55 @@ void agregarVehiculo(){
         cout <<"\nPrecio Base: " << endl;
 		cin >> precioBase;
         precioBaseValido(precioBase);// 3 - Precio base positivo
-       	dtvehiculo = new DtVehiculo(nroSerie,porcentajeBateria,precioBase);		
-		agregarVehiculoAux(dtvehiculo);
+		cout << "\nElija un tipo de vehiculo: 1)Bicicleta. -- 2)Monopatin." << endl;
+		cin >> op;
+		switch (op)
+		{
+		case 1:
+			cout << "\nTipo de bicicleta: 1)Paseo. -- 2)Montaña." << endl;
+			cin >> opTipoBici;
+			switch(opTipoBici){
+				case 1: tBici=PASEO;
+					break;
+				case 2: tBici=MONTANIA;
+					break;
+				default:
+					break;
+			}
+			cout <<"\nCantidad de cambios: " << endl;
+			cin >> cambios;
+			dtBici = new DtBicicleta(nroSerie,porcentajeBateria,precioBase, tBici, cambios);	
+			agregarVehiculoAux(dtBici);
+			break;
+		case 2:
+			cout << "\n¿Tiene luces?: 1)SI. -- 2)NO." << endl;
+			cin >> opTieneLuces;
+			bLuces=(opTieneLuces==1)?true:false;
+			dtPatin = new DtMonopatin(nroSerie,porcentajeBateria,precioBase, bLuces);	
+			agregarVehiculoAux(dtPatin);	
+			break;
+		default:
+			break;
+		}
+		
 		        
     }catch (invalid_argument& e){
         //YA EXISTE EL VEHICULO, PORCENTAJE INVALIDO O 
         cout << e.what() << endl;
     }
+
 }
 
 void agregarVehiculoAux(DtVehiculo* dtvehiculo){
-	if(Bicicleta* bici=dynamic_cast<Bicicleta*>(dtvehiculo)){
-		DtBicicleta* dtbici=new DtBicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipo(),bici->getCantCambios());
-		Bicicleta* b = new Bicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
+	if(DtBicicleta* bici=dynamic_cast<DtBicicleta*>(dtvehiculo)){
+		//DtBicicleta* dtbici=new DtBicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipoBici(),bici->getCantCambios());
+		Bicicleta* b = new Bicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipoBici(),bici->getCantCambios());
 		//guardar en coleccionVehiculo y subir tope
 		coleccionVehiculos.vehiculos[coleccionVehiculos.tope]=b;
 		coleccionVehiculos.tope=coleccionVehiculos.tope+1;
-	}else if(Monopatin* mono=dynamic_cast<Monopatin*>(dtvehiculo)){
-		DtMonopatin* dtmono=new DtMonopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(),mono->getTieneLuces());
-		Monopatin* m = new Monopatin(dtmono->getNroSerie(),dtmono->getPorcentajeBateria(),dtmono->getPrecioBase(), dtmono->getTieneLuces());
+	}else if(DtMonopatin* mono=dynamic_cast<DtMonopatin*>(dtvehiculo)){
+		//DtMonopatin* dtmono=new DtMonopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(),mono->getTieneLuces());
+		Monopatin* m = new Monopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(), mono->getTieneLuces());
 		coleccionVehiculos.vehiculos[coleccionVehiculos.tope]=m;
 		coleccionVehiculos.tope=coleccionVehiculos.tope+1;
 	}
@@ -419,10 +454,9 @@ void obtenerVehiculos(){
 	system("clear");
 	cout <<"_________________________________________________" <<endl;
 	cout <<"___V E R__L I S T A D O__ D E__V E H I C U L O S___"<< endl;
-	int cantVehiculos = coleccionVehiculos.tope;
+	int cantVehiculos;
 	DtBicicleta* bici;
 	DtMonopatin* patin;
-
 		DtVehiculo** dtVehiculos = obtenerVehiculos(cantVehiculos);
 		cout << "VEHICULOS DEL SISTEMA: " <<endl;
 		for (int i = 0; i < cantVehiculos; i++){
@@ -441,8 +475,7 @@ DtVehiculo** obtenerVehiculos(int &cantVehiculos){
 	Vehiculo** vehiculos = coleccionVehiculos.vehiculos;
 	DtBicicleta* dtBici;
 	DtMonopatin* dtPatin;
-	if(cantVehiculos>coleccionVehiculos.tope)
-		cantVehiculos=coleccionVehiculos.tope;
+	cantVehiculos=coleccionVehiculos.tope;
 	DtVehiculo** dtVehiculos = new DtVehiculo*[cantVehiculos];
 	for(int i=0;i<cantVehiculos;i++){
 		if(Bicicleta* bici = dynamic_cast<Bicicleta*>(vehiculos[i])){
@@ -450,8 +483,8 @@ DtVehiculo** obtenerVehiculos(int &cantVehiculos){
 				dtVehiculos[i]=dtBici;
 		}else{
 			if(Monopatin* patin = dynamic_cast<Monopatin*>(vehiculos[i])){
-					dtPatin = new DtMonopatin(patin->getNroSerie(),patin->getPorcentajeBateria(),patin->getPrecioBase(),patin->getTieneLuces());
-					dtVehiculos[i]=dtPatin;
+				dtPatin = new DtMonopatin(patin->getNroSerie(),patin->getPorcentajeBateria(),patin->getPrecioBase(),patin->getTieneLuces());
+				dtVehiculos[i]=dtPatin;
 			}
 		}
 	}

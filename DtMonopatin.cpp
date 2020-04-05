@@ -19,6 +19,7 @@ bool DtMonopatin::getTieneLuces(){
 ostream& operator <<(ostream& sal, const DtMonopatin& m){ //imprime los datos de m
     string luces = (m.tieneLuces) ? "Si":"No";
 	cout << (DtVehiculo) m << endl; 
+    cout << " --MONOPATÍN-- "<< endl;
 	cout << " - Tiene luces: " << luces << endl;   
    return sal;
 }
