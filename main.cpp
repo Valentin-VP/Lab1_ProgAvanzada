@@ -49,6 +49,11 @@ DtVehiculo** obtenerVehiculos(int &cantVehiculos);
 DtVehiculo* obtenerVehiculo(int);
 void cambiarBateriaVehiculo();
 void cambiarBateriaVehiculo(int,float);
+void registrarUsuario();
+bool igualFecha(DtFecha,DtFecha);
+bool existeViaje(string,DtFecha);
+void eliminarViajes(string,DtFecha);
+
 
 
 Usuario* obtenerUsuario(string ci){  //esta bien? //aqui errorSiExisteUsuario(ci) tiraria una excepcion SI existe ese usuario (se va al Catch)
@@ -181,12 +186,15 @@ void errorSiExisteVehiculo(int nroSerie){
     }
 }
 void errorSiNoExisteVehiculo (int nroSerie){
+	bool existe = false;
     int i=0;
-    while(i<coleccionVehiculos.tope){//&&(existe)){
-        if(nroSerie!=coleccionVehiculos.vehiculos[i]->getNroSerie())
-            throw invalid_argument("Ya existe ese vehículo\n");
-        i++;
-    }	
+    while(i<coleccionVehiculos.tope &&(!existe)){
+        if(nroSerie==coleccionVehiculos.vehiculos[i]->getNroSerie())
+			existe = true;
+		
+		i++;
+    }
+	if (!existe) throw invalid_argument("No existe ese vehículo\n");
 }
 
 void ingresarViaje(){
@@ -259,7 +267,18 @@ void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viaje){
 			usuario->agregarViaje(viajea);
 			}
 		}
-}		
+}
+
+void valorPositivo(int d){
+	if(d<=0)
+		throw invalid_argument("El valor debe ser positivo\n");
+}
+
+void fechaValida(DtFecha f, string ci){
+	Usuario* user = obtenerUsuario(ci);
+	if(f < user->getFechaIngreso())
+		throw invalid_argument("La fecha del viaje debe ser posterior o igual a la fecha de ingreso del usuario\n");
+}
  
 // DtViaje ---> Rodrigo -en proceso-
 // Bloque de codigo cuando se solicita imprimir Viajes -- OPERACION verViajesAntesDe
@@ -446,7 +465,7 @@ void cambiarBateriaVehiculo(int nroSerieVehiculo, float cargaVehiculo){
 
 
 int main(){
-    /*
+
     int opcion;
 
 	system("clear");
@@ -456,25 +475,25 @@ int main(){
 	cout << "3) Ingresar viaje" << endl;
 	cout << "4) Ver viajes antes de.." << endl;
 	cout << "5) Eliminar viajes" << endl;
-	cout << "6) Cambiar bateria vehículo" << endl;
+	cout << "6) Cambiar bateria del vehículo" << endl;
 	cout << "7) Obtener vehículos" << endl;
 	cout << "0) Salir" << endl;
-	cout << "Opción:";
+	cout << "Opción: ";
 	cin >> opcion;
 		switch(opcion){
-			case 1: //registrarUsuario();
+			case 1: registrarUsuario();
 				break;
-			case 2: //agregarVehiculo(vehiculo);
+			case 2: agregarVehiculo();
 				break;
-			case 3: //ingresarViaje();
+			case 3: ingresarViaje();
 				break;
-			case 4: //verViajesAntesDeFecha(fecha,ci,cantViajes);
+			case 4: verViajesAntesDeFecha();
 				break;
-			case 5: //eliminarViajes(ci,fecha);
+			case 5: eliminarViajes(string,DtFecha);
 				break;
-			case 6: //cambiarBateriaVehiculo(nroSerieVehiculo,cargaVehiculo);
+			case 6: cambiarBateriaVehiculo();
 				break;
-			case 7: //obtenerVehiculos(cantVehiculos);
+			case 7: obtenerVehiculos();
 				break;
 			case 0: system("exit");
 				break;
@@ -482,13 +501,13 @@ int main(){
 				cout << "Opción incorrecta" << endl;
 		}
         
-*/
-int a=0,i=0;
+	/*int a=0,i=0;
 	while(a==0){
 		registrarUsuario();
 		cout << endl;
 		cin >> a;
 		cout << *coleccionUsuarios.usuarios[i] << endl;
 	}
+	*/
     return 0;
 }

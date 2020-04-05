@@ -16,9 +16,9 @@
     }
 
     ostream& operator <<(ostream& salida,const DtViaje& dtf){ 
-        cout << (DtViajeBase) dtf <<
-        "Precio viaje: " << 
-        dtf.precioTotal << "/" <<
-        dtf.vehiculo <<endl;
+        cout << (DtViajeBase) dtf << endl;
+        cout << "Precio viaje: $"; 
+        cout << dtf.precioTotal << "/" << endl;
+        cout << dtf.vehiculo << endl ;
         return salida;
     }

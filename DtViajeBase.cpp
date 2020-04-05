@@ -21,6 +21,8 @@ DtFecha DtViajeBase::getFecha(){
 	return this->fecha;
 }
 ostream& operator <<(ostream& salida,const DtViajeBase& dtc){
-	cout << "Fecha viaje: " << dtc.fecha << "/" << dtc.distancia << "/" << dtc.duracion <<endl; 
+	cout << "Fecha: " << dtc.fecha <<  endl;
+	cout << "Duracion: " << dtc.duracion << endl;
+	cout << "Distancia: " << dtc.distancia << endl; 
 	return salida;
 }

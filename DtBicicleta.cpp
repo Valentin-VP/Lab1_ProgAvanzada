@@ -23,9 +23,8 @@ int DtBicicleta::getCantCambios(){
 
 
 ostream& operator <<(ostream& sal, const DtBicicleta& b){ //imprime los datos de m
-    string tipo[2]={"Paseo","Montaña"};
-	cout << (DtVehiculo) b << "\n" 
-	"Tipo de Bicicleta: " << tipo[b.tipo] << "\n" 
-    "Cantidad de Cambios: " << b.cantCambios << endl;
+	cout << (DtVehiculo) b << endl;
+	cout << " - Tipo de Bicicleta: " << b.tipo << endl; 
+    cout << " - Cantidad de cambios: " << b.cantCambios << endl;
   	return sal;
 }

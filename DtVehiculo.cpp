@@ -18,8 +18,8 @@ float DtVehiculo::getPrecioBase(){
 }
 
 ostream& operator <<(ostream& sal,const DtVehiculo& v){ 
-	cout << "Numero serie: " << v.nroSerie << "\n" 
-	"Porcentaje bateria: " << v.porcentajeBateria << "\n"
-	"Precio base: $: " << v.precioBase << endl;
+	cout << " - Numero serie: " << v.nroSerie << endl; 
+	cout << " - Porcentaje bateria: " << v.porcentajeBateria << "%" << endl;
+	cout << " - Precio base: $" << v.precioBase << endl;
     return sal;
 }
