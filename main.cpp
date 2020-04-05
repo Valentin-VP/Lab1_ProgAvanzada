@@ -29,7 +29,8 @@ struct{
 	int tope;
 } coleccionVehiculos;
 
-void existeUsuario(string ci);
+void errorSiExisteUsuario(string ci);
+void errorSiNoExisteUsuario(string);
 Usuario* obtenerUsuario (string);
 void ingresarViaje();
 void ingresarViaje(string ci,int nroSerie,DtViajeBase& viajeB);
@@ -37,15 +38,20 @@ void verViajesAntesDeFecha();
 DtViaje** verViajesAntesDeFecha(DtFecha&,string,int&);
 void agregarVehiculo();
 void agregarVehiculo(DtVehiculo&);
-void existeVehiculo(int);
+void errorSiExisteVehiculo(int);
+void errorSiNoExisteVehiculo(int);
 void porcentajeValido(float);
 void precioBaseValido(float);
 void valorPositivo(int);
 void fechaValida(DtFecha,string);
+void obtenerVehiculos();
+DtVehiculo** obtenerVehiculos(int &cantVehiculos);
+DtVehiculo* obtenerVehiculo(int);
 
-Usuario* obtenerUsuario(string ci){  //esta bien? //aqui existeUsuario(ci) tiraria una excepcion SI existe ese usuario (se va al Catch)
+
+Usuario* obtenerUsuario(string ci){  //esta bien? //aqui errorSiExisteUsuario(ci) tiraria una excepcion SI existe ese usuario (se va al Catch)
 	try{
-		existeUsuario(ci);
+		errorSiNoExisteUsuario(ci);
 		Usuario* user;
 		bool existe=false;
 		int i=0;
@@ -61,8 +67,22 @@ Usuario* obtenerUsuario(string ci){  //esta bien? //aqui existeUsuario(ci) tirar
 		cout << e.what() << endl;
 	}
 }
+void errorSiNoExisteUsuario(string ci){
+	//ERROR SI EL USUARIO *NO* EXISTE EN LA COLECCION
+	int i=0;
+    bool existe=false;
+    while((!existe)&&(i<coleccionUsuarios.tope)){
+        if(ci==coleccionUsuarios.usuarios[i]->getCedula())
+            existe=true;
+        else
+            i++;
+        }
+        if(!existe)
+            throw invalid_argument("ERROR: NO EXISTE USUARIO CON ESA CI EN EL SISTEMA\n");
+}
 
-void existeUsuario(string ci){
+void errorSiExisteUsuario(string ci){
+	// EXPLOTA SI EL USUARIO BUSCADO YA EXISTE EN LA COLECCION
     int i=0;
     bool existe=false;
     while((!existe)&&(i<coleccionUsuarios.tope)){
@@ -75,13 +95,13 @@ void existeUsuario(string ci){
             throw invalid_argument("ERROR: YA EXISTE USUARIO CON ESA CI EN EL SISTEMA\n");
 }
 
-void registrarUsuario(){ //funcionando ***FALTA MANEJO DE EXCEPCION USANDO TRY CATCH***
+void registrarUsuario(){ //funcionando 
     string ci, nombre;
 	int d, m, y;
     cout << "Cedula: ";
     cin >> ci;
     try{
-        existeUsuario(ci);
+        errorSiExisteUsuario(ci);
         cout << "Nombre: ";
         cin >> nombre;
 		cout << "Fecha de registro" << endl << "Dia: ";
@@ -102,23 +122,44 @@ void registrarUsuario(){ //funcionando ***FALTA MANEJO DE EXCEPCION USANDO TRY C
 void agregarVehiculo(){
     system("clear");
     //Interfaz con el usuario
-    	int nroSerie;
-		float porcentajeBateria;
-		float precioBase;
-        DtVehiculo vehiculo; //REVISAR
-        //Controles requeridos: 1-No existe un vehiculo con el mismo numero de serie
+	cout <<"______________________________________________" <<endl;
+	cout <<"____R E G I S T R O__D E__V E H I C U L O_____"<< endl;
+    int nroSerie;
+	float porcentajeBateria;
+	float precioBase;
+	DtVehiculo* dtvehiculo;	
     try{
-        existeVehiculo(nroSerie);
-        // 2 - Porcentaje en valor entre 0 y 100
-        porcentajeValido(porcentajeBateria);
-        // 3 - Precio base positivo
-        precioBaseValido(precioBase);
-        // Se agrega vehiculo a coleccionVehiculos
-        
+		cout << "Nro de Serie: " << endl;
+		cin >> nroSerie;		
+		errorSiExisteVehiculo(nroSerie);// 1 -Vehiculo ya registrado
+		cout <<"\nPorcentaje Batería: " << endl;
+		cin >> porcentajeBateria;
+        porcentajeValido(porcentajeBateria);// 2 - Porcentaje en valor entre 0 y 100
+        cout <<"\nPrecio Base: " << endl;
+		cin >> precioBase;
+        precioBaseValido(precioBase);// 3 - Precio base positivo
+       	dtvehiculo = new DtVehiculo(nroSerie,porcentajeBateria,precioBase);		
+		agregarVehiculo(dtvehiculo);
+		        
     }catch (invalid_argument& e){
         //YA EXISTE EL VEHICULO, PORCENTAJE INVALIDO O 
         cout << e.what() << endl;
     }
+}
+
+void agregarVehiculo(DtVehiculo*& dtvehiculo){
+	if(Bicicleta* bici=dynamic_cast<Bicicleta*>(dtvehiculo)){
+		DtBicicleta* dtbici=new DtBicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipo(),bici->getCantCambios());
+		Bicicleta* b = new Bicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
+		//guardar en coleccionVehiculo y subir tope
+		coleccionVehiculos.vehiculos[coleccionVehiculos.tope]=b;
+		coleccionVehiculos.tope=coleccionVehiculos.tope+1;
+	}else if(Monopatin* mono=dynamic_cast<Monopatin*>(dtvehiculo)){
+		DtMonopatin* dtmono=new DtMonopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(),mono->getTieneLuces());
+		Monopatin* m = new Monopatin(dtmono->getNroSerie(),dtmono->getPorcentajeBateria(),dtmono->getPrecioBase(), dtmono->getTieneLuces());
+		coleccionVehiculos.vehiculos[coleccionVehiculos.tope]=m;
+		coleccionVehiculos.tope=coleccionVehiculos.tope+1;
+	}
 }
 
 void precioBaseValido(float pb){
@@ -129,83 +170,95 @@ void porcentajeValido(float pb){
     if((pb<0)||(pb>100))
         throw invalid_argument("Valor de batería inválido\n");
 }
-void existeVehiculo(int nroSerie){
+void errorSiExisteVehiculo(int nroSerie){
     int i=0;
-    // bool existe=true;
     while(i<coleccionVehiculos.tope){//&&(existe)){
         if(nroSerie==coleccionVehiculos.vehiculos[i]->getNroSerie())
             throw invalid_argument("Ya existe ese vehículo\n");
         i++;
     }
 }
-
-
-// Operacion ingresarViaje
+void errorSiNoExisteVehiculo (int nroSerie){
+    int i=0;
+    while(i<coleccionVehiculos.tope){//&&(existe)){
+        if(nroSerie!=coleccionVehiculos.vehiculos[i]->getNroSerie())
+            throw invalid_argument("Ya existe ese vehículo\n");
+        i++;
+    }	
+}
 
 void ingresarViaje(){
-	string ci;
-	int nroSerie;
-	DtViajeBase viajeB;
-	DtFecha fecha;
-	int dia, mes, anio, duracion, distancia;
-	cout << "Ingrese su cedula: ";
-	cin >> ci;
-	cout << "Ingrese numero de serie del vehiculo ";
-	cin >> nroSerie;
-	try{
-		existeUsuario(ci);
-		existeVehiculo(nroSerie);
-		cout <<  "Ingrese dia: ";
-		cin >> dia;
-		cout << "Ingrese mes: ";
-		cin >> mes;
-		cout << "Ingrese anio: ";
-		cin >> anio;
-		fecha=DtFecha(dia,mes,anio);
-		cout << "Ingrese la duracion del viaje: ";
-		cin >> duracion;
-		cout << "Ingrese la distancia del viaje: ";
-		cin >> distancia;
-		valorPositivo(duracion);
-		valorPositivo(distancia);
-		fechaValida(fecha, ci);
-		viajeB=DtViajeBase(duracion,distancia,fecha);
-		// ingresarViaje(ci,nroSerie,viajeB); //Llamada a ingresarViaje con los parametros listos
+    string ci;
+    int nroSerieVehiculo;
+    int dia, mes, anio, duracion, distancia;
+    cout << "Ingrese su cedula: ";
+    cin >> ci;
+    cout << "Ingrese numero de serie del vehiculo: ";
+    cin >> nroSerieVehiculo;
+    try{
+        errorSiExisteUsuario(ci);
+        // Comprobar si existe el Usuario
+        errorSiExisteVehiculo(nroSerieVehiculo);
+        // Comprobar si existe el vehiculo
+        
+        cout << "Ingrese dia: ";
+        cin >> dia;
+        cout << "Ingrese mes: ";
+        cin >> mes;
+        cout << "Ingrese anio: ";
+        cin >> anio;
+        cout << "Ingrese la duracion del viaje: ";
+        cin >> duracion;
+        cout << "Ingrese la distancia del viaje: ";
+        cin >> distancia;
+		// Comprobar si la distancia y duracion son validas:
+        valorPositivo(duracion);
+        valorPositivo(distancia);
 
-	}catch(invalid_argument& e){
-		cout << e.what() << endl;
+        DtFecha fecha=DtFecha(dia,mes,anio);
+        fechaValida(fecha,ci);
+        // Comprobar si la fecha del viaje es posterior o igual a la fecha de ingreso del usuario
+        DtViajeBase viaje = DtViajeBase(duracion,distancia,fecha);
+        ingresarViaje(ci,nroSerieVehiculo,viaje);
+    }catch(std::invalid_argument& e){
+        cout << e.what() << endl;
+    }
+}
+
+DtVehiculo* obtenerVehiculo(int nroSerie){
+	// PRE: Se controla antes que el vehiculo existe en la coleccion
+	for(int i=0;i<coleccionVehiculos.tope;i++){
+		if(nroSerie==coleccionVehiculos.vehiculos[i]->getNroSerie){
+			DtVehiculo* dtve= new DtVehiculo(coleccionVehiculos.vehiculos[i]->getNroSerie(),coleccionVehiculos.vehiculos[i]->getPorcentajeBateria(),coleccionVehiculos.vehiculos[i]->getPrecioBase());
+			return dtve;
+		}
 	}
 }
-void valorPositivo(int d){
-	if(d<=0)
-		throw invalid_argument("El valor debe ser positivo\n");
-}
-
-void fechaValida(DtFecha f, string ci){
-	Usuario* user = obtenerUsuario(ci);
-	if(f < user->getFechaIngreso())
-		throw invalid_argument("La fecha del viaje debe ser posterior o igual a la fecha de ingreso del usuario\n");
-}
-
-// void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viajeB){
-// 	try{
-// 		Usuario* usuario = obtenerUsuario(ci);
-// 		Vehiculo* vehiculo = obtenerVehiculo(nroSerie);
-// 		//usuario->ingresarViaje()
-// 		DtViaje* dtv = new DtViaje(darPrecioViaje(viajeB.getDuracion(),viajeB.getDistancia()),vehiculo);
-// 		Viaje v = new Viaje(dtv.getDuracion(),dtv.getDistancia(),viajeB.getFecha());
-
-
-// 	}catch(){
-
-// 	}
-
-// }
-
-
-//Fin Operacion ingresarViaje
-
-
+void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viaje){
+        // obtener Usuario 
+        Usuario* usuario = obtenerUsuario(ci);
+        // Obtener Vehiculo
+        DtVehiculo* ve = obtenerVehiculo(nroSerieVehiculo) ;// = obtenerVehiculo(nroSerieVehiculo);
+        float precioViaje;
+        
+		if(DtBicicleta* dtbici = dynamic_cast<DtBicicleta*>(ve)){
+			Bicicleta* dtb = new Bicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
+			precioViaje = dtb->darPrecioViaje(viaje.getDuracion(),viaje.getDistancia());
+			DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
+			Viaje* viajea = new Viaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),dtb);
+			usuario->agregarViaje(viajea);
+		}
+		else{
+			if(DtMonopatin* dtmono = dynamic_cast<DtMonopatin*>(ve)){
+			Monopatin* dtm = new Monopatin(dtmono->getNroSerie(),dtmono->getPorcentajeBateria(),dtmono->getPrecioBase(),dtmono->getTieneLuces());
+			precioViaje = dtm->darPrecioViaje(viaje.getDuracion(),viaje.getDistancia());
+			DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
+			Viaje* viajea = new Viaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),dtm);
+			usuario->agregarViaje(viajea);
+			}
+		}
+}		
+ 
 // DtViaje ---> Rodrigo -en proceso-
 // Bloque de codigo cuando se solicita imprimir Viajes -- OPERACION verViajesAntesDe
 
@@ -241,7 +294,9 @@ DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
 
     // Fecha: 25/1/19  10 minutos  3.5 Km
 
-    Usuario* user = obtenerUsuario(ci); //considerar que puede devolver un objeto nulo
+	// try catch usando errorSiNoExisteUsuario
+	
+    Usuario* user = obtenerUsuario(ci); 
 	if(cantViajes>user->getTopeViajes())
 		cantViajes=user->getTopeViajes();
 	Viaje** viajes=user->obtenerViaje(); //copia todos los viajes del usuario en el arreglo de punteros Viaje viajes
@@ -293,7 +348,7 @@ bool existeViaje(string ci,DtFecha& fecha){ //ve si el usuario ci tiene un viaje
 
 void eliminarViajes(string ci, DtFecha& fecha){   //ejercicio e sin comprobar si funciona
 	try{
-		existeUsuario(ci);
+		errorSiExisteUsuario(ci);
 		int i=0,f=0;
 		bool encontroUser=false,encontroFecha=false;
 		while((!encontroUser)||(i<coleccionUsuarios.tope)){
@@ -321,7 +376,7 @@ void eliminarViajes(string ci, DtFecha& fecha){   //ejercicio e sin comprobar si
 
 // OP G
 /* NO TENGO CLARO SI ESTA BIEN */
-void obtenerVehiculo(){ 
+void obtenerVehiculos(){ 
 	system("clear");
 	cout <<"_________________________________________________" <<endl;
 	cout <<"___V E R__L I S T A D O__ D E__V E H I C U L O S___"<< endl;
@@ -329,7 +384,7 @@ void obtenerVehiculo(){
 	DtBicicleta* bici;
 	DtMonopatin* patin;
 
-		DtVehiculo** dtVehiculos = obtenerVehiculo(cantVehiculos);
+		DtVehiculo** dtVehiculos = obtenerVehiculos(cantVehiculos);
 		cout << "VEHICULOS DEL SISTEMA: " <<endl;
 		for (int i = 0; i < cantVehiculos; i++){
 			bici = dynamic_cast<DtBicicleta*>(dtVehiculos[i]);			
@@ -343,7 +398,7 @@ void obtenerVehiculo(){
 			cout << "-------------------------"<< endl;	
 		}
 }
-DtVehiculo** obtenerVehiculo(int &cantVehiculos){
+DtVehiculo** obtenerVehiculos(int &cantVehiculos){
 	Vehiculo** vehiculos = coleccionVehiculos.vehiculos;
 	DtBicicleta* dtBici;
 	DtMonopatin* dtPatin;
