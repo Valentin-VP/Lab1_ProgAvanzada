@@ -121,8 +121,8 @@ void registrarUsuario(){ //funcionando
 		cin >> m;
 		cout << "Año: ";
 		cin >> y; 
-        DtFecha* fecha = new DtFecha(d,m,y);
-        Usuario* u=new Usuario(ci,nombre,*fecha);
+        DtFecha fecha = DtFecha(d,m,y);
+        Usuario* u=new Usuario(ci,nombre,fecha);
         coleccionUsuarios.usuarios[coleccionUsuarios.tope] = u;
         coleccionUsuarios.tope++;
     }catch (invalid_argument& e){
@@ -322,7 +322,7 @@ void valorPositivo(int d){
 
 void fechaValida(DtFecha f, string ci){
 	Usuario* user = obtenerUsuario(ci);
-	if(user->getFechaIngreso() < f)
+	if(f < user->getFechaIngreso())
 		throw invalid_argument("La fecha del viaje debe ser posterior o igual a la fecha de ingreso del usuario\n");
 }
  
