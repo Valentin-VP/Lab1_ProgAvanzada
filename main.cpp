@@ -348,10 +348,6 @@ bool igualFecha(DtFecha f1,DtFecha f2){ //ve si una fecha es igual a la otra
 }
 
 
-//_____________________________COMPROBAR EN EXISTEVIAJE Y EN ELIMINARVIAJES SI EL user->obtenerViaje[i] ESTA BIEN________________________________ 
-
-
-
 bool existeViaje(string ci,DtFecha fecha){ //ve si el usuario ci tiene un viaje en esa fecha
 	try{
 		errorSiNoExisteUsuario(ci);
