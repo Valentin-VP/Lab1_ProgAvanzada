@@ -57,7 +57,7 @@ void eliminarViajes(string,DtFecha);
 
 
 
-Usuario* obtenerUsuario(string ci){  //esta bien? //aqui errorSiExisteUsuario(ci) tiraria una excepcion SI existe ese usuario (se va al Catch)
+Usuario* obtenerUsuario(string ci){ 
 	try{
 		errorSiNoExisteUsuario(ci);
 		Usuario* user;
@@ -189,18 +189,14 @@ void agregarVehiculo(){
         //YA EXISTE EL VEHICULO, PORCENTAJE INVALIDO O 
         cout << e.what() << endl;
     }
-
 }
 
 void agregarVehiculoAux(DtVehiculo* dtvehiculo){
 	if(DtBicicleta* bici=dynamic_cast<DtBicicleta*>(dtvehiculo)){
-		//DtBicicleta* dtbici=new DtBicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipoBici(),bici->getCantCambios());
 		Bicicleta* b = new Bicicleta(bici->getNroSerie(),bici->getPorcentajeBateria(),bici->getPrecioBase(),bici->getTipoBici(),bici->getCantCambios());
-		//guardar en coleccionVehiculo y subir tope
 		coleccionVehiculos.vehiculos[coleccionVehiculos.tope]=b;
 		coleccionVehiculos.tope=coleccionVehiculos.tope+1;
 	}else if(DtMonopatin* mono=dynamic_cast<DtMonopatin*>(dtvehiculo)){
-		//DtMonopatin* dtmono=new DtMonopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(),mono->getTieneLuces());
 		Monopatin* m = new Monopatin(mono->getNroSerie(),mono->getPorcentajeBateria(),mono->getPrecioBase(), mono->getTieneLuces());
 		coleccionVehiculos.vehiculos[coleccionVehiculos.tope]=m;
 		coleccionVehiculos.tope=coleccionVehiculos.tope+1;
@@ -251,7 +247,6 @@ void ingresarViaje(){
         // Comprobar si existe el Usuario
         errorSiNoExisteVehiculo(nroSerieVehiculo);
         // Comprobar si existe el vehiculo
-        
         cout << "Ingrese dia: ";
         cin >> dia;
         cout << "Ingrese mes: ";
@@ -292,15 +287,12 @@ DtVehiculo* obtenerVehiculo(int nroSerie){
 	}
 }
 void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viaje){
-        // obtener Usuario 
         Usuario* usuario = obtenerUsuario(ci);
-        // Obtener Vehiculo
-        DtVehiculo* ve = obtenerVehiculo(nroSerieVehiculo) ;// = obtenerVehiculo(nroSerieVehiculo);
+        DtVehiculo* ve = obtenerVehiculo(nroSerieVehiculo);
         float precioViaje;
 		if(DtBicicleta* dtbici = dynamic_cast<DtBicicleta*>(ve)){
 			Bicicleta* dtb = new Bicicleta(dtbici->getNroSerie(),dtbici->getPorcentajeBateria(),dtbici->getPrecioBase(),dtbici->getTipoBici(),dtbici->getCantCambios());
 			precioViaje = dtb->darPrecioViaje(viaje.getDuracion(),viaje.getDistancia());
-			//DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
 			Viaje* viajea = new Viaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),dtb);
 			usuario->agregarViaje(viajea);
 		}
@@ -308,7 +300,6 @@ void ingresarViaje(string ci, int nroSerieVehiculo, DtViajeBase& viaje){
 			if(DtMonopatin* dtmono = dynamic_cast<DtMonopatin*>(ve)){
 			Monopatin* dtm = new Monopatin(dtmono->getNroSerie(),dtmono->getPorcentajeBateria(),dtmono->getPrecioBase(),dtmono->getTieneLuces());
 			precioViaje = dtm->darPrecioViaje(viaje.getDuracion(),viaje.getDistancia());
-			//DtViaje* dviaje = new DtViaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),precioViaje,ve);
 			Viaje* viajea = new Viaje(viaje.getDuracion(),viaje.getDistancia(),viaje.getFecha(),dtm);
 			usuario->agregarViaje(viajea);
 			}
@@ -325,9 +316,6 @@ void fechaValida(DtFecha f, string ci){
 	if(f < user->getFechaIngreso())
 		throw invalid_argument("La fecha del viaje debe ser posterior o igual a la fecha de ingreso del usuario\n");
 }
- 
-// DtViaje ---> Rodrigo -en proceso-
-// Bloque de codigo cuando se solicita imprimir Viajes -- OPERACION verViajesAntesDe
 
 void verViajesAntesDeFecha(){
     system("clear");
@@ -348,12 +336,11 @@ void verViajesAntesDeFecha(){
     dtFecha = DtFecha(dia,mes,anio);
     DtViaje** viajes= verViajesAntesDeFecha(dtFecha, ci, cantViajes);
     for (int i=0; i<cantViajes; i++)
-        cout << "\n" << *(viajes[i]); //revisando si imprime bien
+        cout << "\n" << *(viajes[i]); 
 	sleep(2);
 }
 
 DtViaje** verViajesAntesDeFecha (DtFecha& fecha, string ci, int& cantViajes){
-	// try catch usando errorSiNoExisteUsuario
 	try{
 		errorSiNoExisteUsuario(ci);
 		Usuario* user = obtenerUsuario(ci); 
@@ -393,11 +380,6 @@ bool igualFecha(DtFecha f1,DtFecha f2){ //ve si una fecha es igual a la otra
 		return false;
 }
 
-
-//_____________________________COMPROBAR EN EXISTEVIAJE Y EN ELIMINARVIAJES SI EL user->obtenerViaje[i] ESTA BIEN________________________________ 
-
-
-
 bool existeViaje(string ci,DtFecha fecha){ //ve si el usuario ci tiene un viaje en esa fecha
 	try{
 		errorSiNoExisteUsuario(ci);
@@ -419,8 +401,8 @@ bool existeViaje(string ci,DtFecha fecha){ //ve si el usuario ci tiene un viaje 
 	}
 
 }
-//FALTA void eliminarViajes(string ci, DtFecha& fecha)
-void eliminarViajes(){   //ejercicio e sin comprobar si funciona
+
+void eliminarViajes(){  
 	system("clear");
 	cout <<"_____________________________________________" <<endl;
 	cout <<"______E L I M I N A R__V I A J E S_______"<< endl;
@@ -432,32 +414,38 @@ void eliminarViajes(){   //ejercicio e sin comprobar si funciona
 	cin >> d;
 	cout << "Mes: ";
 	cin >> m;
-	cout << "Anio: ";
+	cout << "Año: ";
 	cin >> y;
 	DtFecha fecha = DtFecha(d,m,y);
 	try{
 		errorSiNoExisteUsuario(ci);
 		int i=0,f=0;
 		bool encontroUser=false,encontroFecha=false;
-		while((!encontroUser)||(i<coleccionUsuarios.tope)){
+		while((!encontroUser)&&(i<coleccionUsuarios.tope)){
         	if(ci!=coleccionUsuarios.usuarios[i]->getCedula())
 				i++;
 			else{
-				encontroUser=true;  //i es la posicion del usuario en el arreglo
-				while(existeViaje(ci,fecha)){	
-					while((!encontroFecha)||(i<coleccionUsuarios.usuarios[i]->getTopeViajes())){
-						if(!igualFecha(fecha,coleccionUsuarios.usuarios[i]->obtenerViaje()[f]->getFecha()))//se corrige esto
-							f++;
-						else{
-							cout << "Paso previo al delete" << endl;
-							delete coleccionUsuarios.usuarios[i]->obtenerViaje()[f];
-							if(f!=coleccionUsuarios.usuarios[i]->getTopeViajes()-1){
-								coleccionUsuarios.usuarios[i]->obtenerViaje()[f]=coleccionUsuarios.usuarios[i]->obtenerViaje()[coleccionUsuarios.usuarios[i]->getTopeViajes()-1];	
+				encontroUser=true; 
+				if(coleccionUsuarios.usuarios[i]->getTopeViajes()==0){
+					cout << "No existen viajes para este usuario" << endl;
+				}
+				else{
+					while(existeViaje(ci,fecha)&&(coleccionUsuarios.usuarios[i]->getTopeViajes()!=0)){
+						encontroFecha==false;
+						f=0;
+						while((!encontroFecha)&&(f<coleccionUsuarios.usuarios[i]->getTopeViajes())){
+							if(igualFecha(fecha,coleccionUsuarios.usuarios[i]->obtenerViaje()[f]->getFecha())){
+								delete coleccionUsuarios.usuarios[i]->obtenerViaje()[f];
+								encontroFecha==true;
+								if(coleccionUsuarios.usuarios[i]->getTopeViajes()-1>0)
+									coleccionUsuarios.usuarios[i]->obtenerViaje()[f]=coleccionUsuarios.usuarios[i]->obtenerViaje()[coleccionUsuarios.usuarios[i]->getTopeViajes()];
+								coleccionUsuarios.usuarios[i]->setTopeViajes(coleccionUsuarios.usuarios[i]->getTopeViajes()-1);	
 							}
-							coleccionUsuarios.usuarios[i]->setTopeViajes(coleccionUsuarios.usuarios[i]->getTopeViajes()-1);
+							f++;
 						}
 					}
 				}
+
 			}
 		}
 	}catch (invalid_argument& e){
@@ -465,8 +453,6 @@ void eliminarViajes(){   //ejercicio e sin comprobar si funciona
 	}
 }
 
-// OP G
-/* NO TENGO CLARO SI ESTA BIEN */
 void obtenerVehiculos(){ 
 	system("clear");
 	cout <<"_________________________________________________" <<endl;
